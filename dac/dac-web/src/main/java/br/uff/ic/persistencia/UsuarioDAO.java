@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author fabio
  */
-public class UsuarioDAO extends AbstractCRUD<Usuario,Long> implements UsuarioJPA{
+public class UsuarioDAO extends AbstractCRUD<Usuario,String> implements UsuarioJPA{
 
     private static UsuarioDAO instance;
 
