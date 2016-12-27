@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EquipamentoFacade extends AbstractFacade<Equipamento> implements EquipamentoFacadeLocal {
 
-    @PersistenceContext(unitName = "br.uff.ic_dac-ejb_ejb_1.0PU")
+    @PersistenceContext(unitName = "dac")
     private EntityManager em;
 
     @Override
@@ -27,7 +27,6 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> implements Eq
 
     public EquipamentoFacade() {
         super(Equipamento.class);
-        Conexao.getConexao();
     }
     
 }

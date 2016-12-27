@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class TipoSalaFacade extends AbstractFacade<TipoSala> implements TipoSalaFacadeLocal {
 
-    @PersistenceContext(unitName = "br.uff.ic_dac-ejb_ejb_1.0PU")
+    @PersistenceContext(unitName = "dac")
     private EntityManager em;
 
     @Override

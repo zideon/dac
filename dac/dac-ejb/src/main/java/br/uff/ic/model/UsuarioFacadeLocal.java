@@ -30,5 +30,5 @@ public interface UsuarioFacadeLocal {
 
     int count();
     
-    public Usuario autentificar(String login,String senha);
+    Usuario autentificar(String login,String senha);
 }
