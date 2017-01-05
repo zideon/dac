@@ -16,13 +16,13 @@
                         <h1><h:outputText value="List"/></h1>
                         <p:dataTable value="#{equipamentoController.findAll()}" var="item">
                             <p:column headerText="ID">
-                                <h:outputText value="#{item.numeroPatrimonio}" />
+                                <h:outputText value="#{item.tipo}" />
                             </p:column>
                         </p:dataTable>
                     </h:form>
                 </f:view>
             </ui:define>
-
+            <h:commandButton value="submit" type="submit" action="#{equipamentoController}" />
         </ui:composition>
 
     </h:body>

@@ -6,11 +6,13 @@
 package br.uff.ic.controller;
 
 import br.uff.ic.entities.Usuario;
+import br.uff.ic.model.PapelFacadeLocal;
 import br.uff.ic.model.UsuarioFacadeLocal;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -18,13 +20,13 @@ import javax.faces.context.FacesContext;
  *
  * @author zideon
  */
-@Named(value = "loginController")
+@ManagedBean(name ="loginController")
 @SessionScoped
 public class LoginController {
 
-    @EJB
-    private UsuarioFacadeLocal usuarioFacade;
 
+    @EJB
+    private UsuarioFacadeLocal usuarioFacade;   
     
     
     /**
@@ -36,6 +38,7 @@ public class LoginController {
      * Creates a new instance of LoginBean
      */
     public LoginController() {
+        logado = new Usuario();
     }
 
     public Usuario getLogado() {
@@ -48,6 +51,7 @@ public class LoginController {
     public String envia() {
         System.out.println("login" + logado.getLogin());
         Usuario autentificar = usuarioFacade.autentificar(logado.getLogin(), logado.getSenha());
+        System.out.println(autentificar.getPapel().getTipo());
         if (autentificar != null) {
             logado = autentificar;
             return "/index";

@@ -8,12 +8,13 @@ package br.uff.ic.controller;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author zideon
  */
-@Named(value = "registroController")
+@ManagedBean(name = "registroController")
 @SessionScoped
 public class RegistroController implements Serializable {
 

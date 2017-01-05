@@ -6,19 +6,25 @@
 package br.uff.ic.controller;
 
 import br.uff.ic.entities.Equipamento;
+import br.uff.ic.entities.TipoEquipamento;
+import br.uff.ic.model.TipoEquipamentoFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author zideon
  */
-@Named(value = "equipamentoController")
+@ManagedBean(name = "equipamentoController")
 @SessionScoped
 public class EquipamentoController implements Serializable {
+
+    @EJB
+    private TipoEquipamentoFacadeLocal tipoEquipamentoFacade;
 
     @EJB
     private br.uff.ic.model.EquipamentoFacadeLocal equipamentoFacade;
@@ -30,7 +36,11 @@ public class EquipamentoController implements Serializable {
      */
     public EquipamentoController() {
     }
-    public List<Equipamento> findAll(){
-        return equipamentoFacade.findAll();
+    public List<TipoEquipamento> findAll(){
+        
+        return tipoEquipamentoFacade.findAll();
+    }
+    public void printa(){
+        System.out.println("tentou printar");
     }
 }

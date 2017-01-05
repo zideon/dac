@@ -8,15 +8,17 @@ package br.uff.ic.controller;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author zideon
  */
-@Named(value = "admController")
+@ManagedBean(name = "admController")
 @SessionScoped
 public class AdmController implements Serializable {
 
+    
     /**
      * Creates a new instance of AdmController
      */

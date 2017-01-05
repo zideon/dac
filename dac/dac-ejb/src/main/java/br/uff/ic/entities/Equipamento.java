@@ -7,10 +7,7 @@ package br.uff.ic.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
 /**
  *
@@ -22,4 +19,22 @@ public class Equipamento implements Serializable {
     private String numeroPatrimonio;
     
     private TipoEquipamento tipo;
+
+    public String getNumeroPatrimonio() {
+        return numeroPatrimonio;
+    }
+
+    public void setNumeroPatrimonio(String numeroPatrimonio) {
+        this.numeroPatrimonio = numeroPatrimonio;
+    }
+
+    public TipoEquipamento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEquipamento tipo) {
+        this.tipo = tipo;
+    }
+    
+    
 }

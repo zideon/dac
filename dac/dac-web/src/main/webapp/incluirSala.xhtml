@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="layout.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Numero:" for="numero" />
+                            <p:inputText id="numero" value="#{salaController.sala.numero}" title="Numero" />
+                            <p:outputLabel for="tipos" value="Tipo: " />
+                            <p:selectOneMenu id="tipos" value="#{salaController.tipo}" style="width:150px">
+                                <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{salaController.tipos}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Capacidade:" for="capacidade" />
+                            <p:inputText id="capacidade" value="#{salaController.sala.capacidade}" title="Capacidade" />
+                        </p:panelGrid>
+                        <p:commandButton value="Salvar" icon="ui-icon-star" action="#{salaController.salvar()}" ajax="false">
+                        </p:commandButton>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

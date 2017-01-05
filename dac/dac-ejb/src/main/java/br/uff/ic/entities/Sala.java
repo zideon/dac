@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Sala implements Serializable {
     @Id
     private String numero;
     
+    @OneToOne
     private TipoSala tipo;
     
     private int capacidade;

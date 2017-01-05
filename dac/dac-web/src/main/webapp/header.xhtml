@@ -6,6 +6,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       >
     <h:head>
 
@@ -20,14 +21,19 @@
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><h:link value="home" outcome="index" /></li>
+                        <c:if test="#{not empty loginBean.logado.cpf}">
+
+                            <li id="up"><h:link value="bem vindo #{loginController.logado.nome}"  outcome="index" /></li>
+                            <li id="up"><h:link value="Logado como #{loginController.logado.papel.tipo}"  outcome="index" /></li>
+                        </c:if>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" >
-                        <li><h:link value="signup" outcome="signup" rendered="#{empty loginBean.logado.ID}"/></li>
-                        <li><h:link value="login" outcome="login" rendered="#{empty loginBean.logado.ID}" /></li>
-                        <li class="navbar-brand"><h:outputText value="bem vindo #{loginBean.logado.login}" rendered="#{not empty loginBean.logado.ID}" /></li>
+                        <li><h:link value="login" outcome="login" rendered="#{empty loginController.logado.cpf}" /></li>
+
                         <li>
-                            <h:form rendered="#{not empty loginBean.logado.ID}" > <p:commandButton value="deslogar" action="#{loginBean.deslogar()}" ajax="false">
+                            <h:form rendered="#{not empty loginController.logado.cpf}" > <p:commandButton update=":up" value="deslogar" action="#{loginController.deslogar()}" ajax="false">
                                 </p:commandButton></h:form></li>
+
                     </ul>
                 </div>
             </nav>

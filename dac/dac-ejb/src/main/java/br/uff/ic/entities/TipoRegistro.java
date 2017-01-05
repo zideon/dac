@@ -24,4 +24,22 @@ public class TipoRegistro implements Serializable {
     private Long ID;
     
     private String tipo;
+
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
 }
