@@ -30,4 +30,5 @@ public interface TipoSalaFacadeLocal {
 
     int count();
     
+    TipoSala findForTipo(String tipo);
 }

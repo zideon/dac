@@ -8,6 +8,7 @@ package br.uff.ic.controller;
 import br.uff.ic.entities.Usuario;
 import br.uff.ic.model.PapelFacadeLocal;
 import br.uff.ic.model.UsuarioFacadeLocal;
+import br.uff.ic.util.SessionUtil;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
@@ -51,9 +52,10 @@ public class LoginController {
     public String envia() {
         System.out.println("login" + logado.getLogin());
         Usuario autentificar = usuarioFacade.autentificar(logado.getLogin(), logado.getSenha());
-        System.out.println(autentificar.getPapel().getTipo());
         if (autentificar != null) {
             logado = autentificar;
+            SessionUtil.setParam("USUARIOLogado", new Object());
+            SessionUtil.setParam("PAPELLogado", logado.getPapel().getTipo());
             return "/index";
         } else {
             logado = new Usuario();

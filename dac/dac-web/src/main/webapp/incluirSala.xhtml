@@ -17,8 +17,8 @@
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Numero:" for="numero" />
                             <p:inputText id="numero" value="#{salaController.sala.numero}" title="Numero" />
-                            <p:outputLabel for="tipos" value="Tipo: " />
-                            <p:selectOneMenu id="tipos" value="#{salaController.tipo}" style="width:150px">
+                            <p:outputLabel for="tipo" value="Tipo: " />
+                            <p:selectOneMenu id="tipo" value="#{salaController.tipo}" style="width:150px">
                                 <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{salaController.tipos}" />
                             </p:selectOneMenu>

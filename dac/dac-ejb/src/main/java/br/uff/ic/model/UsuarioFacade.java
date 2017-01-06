@@ -20,7 +20,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @PersistenceContext(unitName = "dac")
     private EntityManager em;
 
-    private Class type;
+    private final Class type;
     
     @Override
     protected EntityManager getEntityManager() {

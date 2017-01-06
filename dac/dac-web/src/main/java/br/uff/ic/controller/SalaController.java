@@ -11,14 +11,13 @@ import br.uff.ic.model.RecursoSalaFacadeLocal;
 import br.uff.ic.model.ReservaSalaFacadeLocal;
 import br.uff.ic.model.SalaFacadeLocal;
 import br.uff.ic.model.TipoSalaFacadeLocal;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -41,7 +40,7 @@ public class SalaController implements Serializable {
     private SalaFacadeLocal salaFacade;
     
     private Sala sala;
-    private Map<String,Object> tipos;
+    private List<SelectItem> tipos;
     private String tipo="";
 
     public String getTipo() {
@@ -53,17 +52,17 @@ public class SalaController implements Serializable {
     }
     
 
-    public Map<String, Object> getTipos() {
-        tipos = new HashMap<>();
+    public List<SelectItem> getTipos() {
+        tipos = new ArrayList<>();
         List<TipoSala> findAll = tipoSalaFacade.findAll();
         System.out.println("tamanho"+findAll.size());
         for (TipoSala tipoSala : findAll) {
-            tipos.put(tipoSala.getID().toString(), tipoSala.getTipo());
+            tipos.add( new SelectItem(tipoSala.getID().toString(),tipoSala.getTipo()));
         }
         return tipos;
     }
 
-    public void setTipos(Map<String, Object> tipos) {
+    public void setTipos(List<SelectItem> tipos) {
         this.tipos = tipos;
     }
     
@@ -87,6 +86,7 @@ public class SalaController implements Serializable {
         
     }
     public String salvar(){
+        System.out.println("tipos:"+tipos);
         TipoSala find = tipoSalaFacade.find(Long.parseLong(tipo));
         sala.setTipo(find);
         salaFacade.create(sala);
