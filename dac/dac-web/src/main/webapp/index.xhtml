@@ -7,24 +7,31 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        <ui:composition template="layoutAdministrador.xhtml">
-            <ui:define name="content">
-                <f:view>
-                    <h:form>
-                        <h1><h:outputText value="List"/></h1>
-                        <p:dataTable value="#{equipamentoController.findAll()}" var="item">
-                            <p:column headerText="ID">
-                                <h:outputText value="#{item.tipo}" />
-                            </p:column>
-                        </p:dataTable>
-                    </h:form>
-                </f:view>
-            </ui:define>
-            <h:commandButton value="submit" type="submit" action="#{equipamentoController}" />
-        </ui:composition>
+        <ui:composition template="template.xhtml">
+            <p:dialog appendTo="@(body)">
+                <p:message>Bem vindo</p:message>
+            </p:dialog>
+                
 
+        </ui:composition>
     </h:body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>
 

@@ -1,9 +1,9 @@
 package br.uff.ic.controller;
 
-import br.uff.ic.entities.Sala;
+import br.uff.ic.entities.Usuario;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
-import br.uff.ic.model.SalaFacadeLocal;
+import br.uff.ic.model.UsuarioFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,25 +19,24 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("salaController")
+@Named("usuarioController")
 @SessionScoped
-public class SalaController implements Serializable {
+public class UsuarioController implements Serializable {
 
     @EJB
-    private SalaFacadeLocal ejbFacade;
+    private UsuarioFacadeLocal ejbFacade;
 
-    
-    private List<Sala> items = null;
-    private Sala selected;
+    private List<Usuario> items = null;
+    private Usuario selected;
 
-    public SalaController() {
+    public UsuarioController() {
     }
 
-    public Sala getSelected() {
+    public Usuario getSelected() {
         return selected;
     }
 
-    public void setSelected(Sala selected) {
+    public void setSelected(Usuario selected) {
         this.selected = selected;
     }
 
@@ -47,36 +46,36 @@ public class SalaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SalaFacadeLocal getFacade() {
+    private UsuarioFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Sala prepareCreate() {
-        selected = new Sala();
+    public Usuario prepareCreate() {
+        selected = new Usuario();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SalaCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SalaUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SalaDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UsuarioDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Sala> getItems() {
+    public List<Usuario> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -111,29 +110,29 @@ public class SalaController implements Serializable {
         }
     }
 
-    public Sala getSala(java.lang.String id) {
+    public Usuario getUsuario(java.lang.String id) {
         return getFacade().find(id);
     }
 
-    public List<Sala> getItemsAvailableSelectMany() {
+    public List<Usuario> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Sala> getItemsAvailableSelectOne() {
+    public List<Usuario> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Sala.class)
-    public static class SalaControllerConverter implements Converter {
+    @FacesConverter(forClass = Usuario.class)
+    public static class UsuarioControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SalaController controller = (SalaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "salaController");
-            return controller.getSala(getKey(value));
+            UsuarioController controller = (UsuarioController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "usuarioController");
+            return controller.getUsuario(getKey(value));
         }
 
         java.lang.String getKey(String value) {
@@ -153,11 +152,11 @@ public class SalaController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Sala) {
-                Sala o = (Sala) object;
-                return getStringKey(o.getNumero());
+            if (object instanceof Usuario) {
+                Usuario o = (Usuario) object;
+                return getStringKey(o.getCpf());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Sala.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Usuario.class.getName()});
                 return null;
             }
         }

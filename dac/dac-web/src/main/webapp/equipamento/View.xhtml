@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EquipamentoViewDlg" widgetVar="EquipamentoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEquipamentoTitle}">
+            <h:form id="EquipamentoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{equipamentoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEquipamentoLabel_numeroPatrimonio}"/>
+                        <h:outputText value="#{equipamentoController.selected.numeroPatrimonio}" title="#{bundle.ViewEquipamentoTitle_numeroPatrimonio}"/>
+                        <h:outputText value="#{bundle.ViewEquipamentoLabel_tipo}"/>
+                        <h:outputText value="#{equipamentoController.selected.tipo}" title="#{bundle.ViewEquipamentoTitle_tipo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EquipamentoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

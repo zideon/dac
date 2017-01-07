@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListReservaSalaTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ReservaSalaListForm">
+                <p:panel header="#{bundle.ListReservaSalaTitle}">
+                    <p:dataTable id="datalist" value="#{reservaSalaController.items}" var="item"
+                                 selectionMode="single" selection="#{reservaSalaController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_ID}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ID}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_data}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.data}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_horaInicial}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.horaInicial}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_horaFinal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.horaFinal}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_sala}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sala}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{reservaSalaController.prepareCreate}" update=":ReservaSalaCreateForm" oncomplete="PF('ReservaSalaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ReservaSalaViewForm" oncomplete="PF('ReservaSalaViewDialog').show()" disabled="#{empty reservaSalaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ReservaSalaEditForm" oncomplete="PF('ReservaSalaEditDialog').show()" disabled="#{empty reservaSalaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{reservaSalaController.destroy}" update=":growl,datalist" disabled="#{empty reservaSalaController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

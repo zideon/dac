@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroEquipamentoCreateDlg" widgetVar="RegistroEquipamentoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRegistroEquipamentoTitle}">
+            <h:form id="RegistroEquipamentoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{registroEquipamentoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRegistroEquipamentoLabel_ID}" for="ID" />
+                        <p:inputText id="ID" value="#{registroEquipamentoController.selected.ID}" title="#{bundle.CreateRegistroEquipamentoTitle_ID}" />
+                        <p:outputLabel value="#{bundle.CreateRegistroEquipamentoLabel_tipo}" for="tipo" />
+                        <p:selectOneMenu id="tipo" value="#{registroEquipamentoController.selected.tipo}" >
+                            <f:selectItems value="#{tipoRegistroController.itemsAvailableSelectOne}"
+                                           var="tipoItem"
+                                           itemValue="#{tipoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRegistroEquipamentoLabel_reserva}" for="reserva" />
+                        <p:selectOneMenu id="reserva" value="#{registroEquipamentoController.selected.reserva}" >
+                            <f:selectItems value="#{reservaEquipamentoController.itemsAvailableSelectOne}"
+                                           var="reservaItem"
+                                           itemValue="#{reservaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{registroEquipamentoController.create}" value="#{bundle.Save}" update="display,:RegistroEquipamentoListForm:datalist,:growl" oncomplete="handleSubmit(args,'RegistroEquipamentoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RegistroEquipamentoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

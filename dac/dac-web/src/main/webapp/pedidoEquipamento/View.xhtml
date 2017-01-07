@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PedidoEquipamentoViewDlg" widgetVar="PedidoEquipamentoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPedidoEquipamentoTitle}">
+            <h:form id="PedidoEquipamentoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pedidoEquipamentoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_ID}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.ID}" title="#{bundle.ViewPedidoEquipamentoTitle_ID}"/>
+                        <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_data}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.data}" title="#{bundle.ViewPedidoEquipamentoTitle_data}"/>
+                        <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_horaInicial}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.horaInicial}" title="#{bundle.ViewPedidoEquipamentoTitle_horaInicial}"/>
+                        <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_horaFinal}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.horaFinal}" title="#{bundle.ViewPedidoEquipamentoTitle_horaFinal}"/>
+                        <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_usuario}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.usuario}" title="#{bundle.ViewPedidoEquipamentoTitle_usuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PedidoEquipamentoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

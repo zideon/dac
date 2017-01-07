@@ -1,9 +1,9 @@
 package br.uff.ic.controller;
 
-import br.uff.ic.entities.Sala;
+import br.uff.ic.entities.Papel;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
-import br.uff.ic.model.SalaFacadeLocal;
+import br.uff.ic.model.PapelFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,25 +19,25 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("salaController")
+
+@Named("papelController")
 @SessionScoped
-public class SalaController implements Serializable {
+public class PapelController implements Serializable {
 
     @EJB
-    private SalaFacadeLocal ejbFacade;
+    private PapelFacadeLocal ejbFacade;
+   
+    private List<Papel> items = null;
+    private Papel selected;
 
-    
-    private List<Sala> items = null;
-    private Sala selected;
-
-    public SalaController() {
+    public PapelController() {
     }
 
-    public Sala getSelected() {
+    public Papel getSelected() {
         return selected;
     }
 
-    public void setSelected(Sala selected) {
+    public void setSelected(Papel selected) {
         this.selected = selected;
     }
 
@@ -47,36 +47,36 @@ public class SalaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SalaFacadeLocal getFacade() {
+    private PapelFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Sala prepareCreate() {
-        selected = new Sala();
+    public Papel prepareCreate() {
+        selected = new Papel();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SalaCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PapelCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SalaUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PapelUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SalaDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PapelDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Sala> getItems() {
+    public List<Papel> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -111,40 +111,40 @@ public class SalaController implements Serializable {
         }
     }
 
-    public Sala getSala(java.lang.String id) {
+    public Papel getPapel(Long id) {
         return getFacade().find(id);
     }
 
-    public List<Sala> getItemsAvailableSelectMany() {
+    public List<Papel> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Sala> getItemsAvailableSelectOne() {
+    public List<Papel> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Sala.class)
-    public static class SalaControllerConverter implements Converter {
+    @FacesConverter(forClass=Papel.class)
+    public static class PapelControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SalaController controller = (SalaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "salaController");
-            return controller.getSala(getKey(value));
+            PapelController controller = (PapelController)facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "papelController");
+            return controller.getPapel(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        Long getKey(String value) {
+            Long key;
+            key = Long.parseLong(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(Long value) {
             StringBuilder sb = new StringBuilder();
-            sb.append(value);
+            sb.append(value.toString());
             return sb.toString();
         }
 
@@ -153,11 +153,11 @@ public class SalaController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Sala) {
-                Sala o = (Sala) object;
-                return getStringKey(o.getNumero());
+            if (object instanceof Papel) {
+                Papel o = (Papel) object;
+                return getStringKey(o.getID());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Sala.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Papel.class.getName()});
                 return null;
             }
         }

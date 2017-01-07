@@ -1,9 +1,9 @@
 package br.uff.ic.controller;
 
-import br.uff.ic.entities.Sala;
+import br.uff.ic.entities.TipoEquipamento;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
-import br.uff.ic.model.SalaFacadeLocal;
+import br.uff.ic.model.TipoEquipamentoFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,25 +19,25 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("salaController")
+@Named("tipoEquipamentoController")
 @SessionScoped
-public class SalaController implements Serializable {
+public class TipoEquipamentoController implements Serializable {
 
     @EJB
-    private SalaFacadeLocal ejbFacade;
+    private TipoEquipamentoFacadeLocal ejbFacade;
 
     
-    private List<Sala> items = null;
-    private Sala selected;
+    private List<TipoEquipamento> items = null;
+    private TipoEquipamento selected;
 
-    public SalaController() {
+    public TipoEquipamentoController() {
     }
 
-    public Sala getSelected() {
+    public TipoEquipamento getSelected() {
         return selected;
     }
 
-    public void setSelected(Sala selected) {
+    public void setSelected(TipoEquipamento selected) {
         this.selected = selected;
     }
 
@@ -47,36 +47,36 @@ public class SalaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SalaFacadeLocal getFacade() {
+    private TipoEquipamentoFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Sala prepareCreate() {
-        selected = new Sala();
+    public TipoEquipamento prepareCreate() {
+        selected = new TipoEquipamento();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SalaCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TipoEquipamentoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SalaUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TipoEquipamentoUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SalaDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TipoEquipamentoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Sala> getItems() {
+    public List<TipoEquipamento> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -111,38 +111,38 @@ public class SalaController implements Serializable {
         }
     }
 
-    public Sala getSala(java.lang.String id) {
+    public TipoEquipamento getTipoEquipamento(Long id) {
         return getFacade().find(id);
     }
 
-    public List<Sala> getItemsAvailableSelectMany() {
+    public List<TipoEquipamento> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Sala> getItemsAvailableSelectOne() {
+    public List<TipoEquipamento> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Sala.class)
-    public static class SalaControllerConverter implements Converter {
+    @FacesConverter(forClass = TipoEquipamento.class)
+    public static class TipoEquipamentoControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SalaController controller = (SalaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "salaController");
-            return controller.getSala(getKey(value));
+            TipoEquipamentoController controller = (TipoEquipamentoController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tipoEquipamentoController");
+            return controller.getTipoEquipamento(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        Long getKey(String value) {
+            Long key;
+            key =Long.parseLong(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -153,11 +153,11 @@ public class SalaController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Sala) {
-                Sala o = (Sala) object;
-                return getStringKey(o.getNumero());
+            if (object instanceof TipoEquipamento) {
+                TipoEquipamento o = (TipoEquipamento) object;
+                return getStringKey(o.getID());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Sala.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TipoEquipamento.class.getName()});
                 return null;
             }
         }

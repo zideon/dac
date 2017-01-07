@@ -1,9 +1,9 @@
 package br.uff.ic.controller;
 
-import br.uff.ic.entities.Sala;
+import br.uff.ic.entities.TipoRegistro;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
-import br.uff.ic.model.SalaFacadeLocal;
+import br.uff.ic.model.TipoRegistroFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,25 +19,25 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("salaController")
+@Named("tipoRegistroController")
 @SessionScoped
-public class SalaController implements Serializable {
+public class TipoRegistroController implements Serializable {
 
     @EJB
-    private SalaFacadeLocal ejbFacade;
+    private TipoRegistroFacadeLocal ejbFacade;
 
     
-    private List<Sala> items = null;
-    private Sala selected;
+    private List<TipoRegistro> items = null;
+    private TipoRegistro selected;
 
-    public SalaController() {
+    public TipoRegistroController() {
     }
 
-    public Sala getSelected() {
+    public TipoRegistro getSelected() {
         return selected;
     }
 
-    public void setSelected(Sala selected) {
+    public void setSelected(TipoRegistro selected) {
         this.selected = selected;
     }
 
@@ -47,36 +47,36 @@ public class SalaController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SalaFacadeLocal getFacade() {
+    private TipoRegistroFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Sala prepareCreate() {
-        selected = new Sala();
+    public TipoRegistro prepareCreate() {
+        selected = new TipoRegistro();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SalaCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("TipoRegistroCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SalaUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("TipoRegistroUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SalaDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("TipoRegistroDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Sala> getItems() {
+    public List<TipoRegistro> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -111,38 +111,38 @@ public class SalaController implements Serializable {
         }
     }
 
-    public Sala getSala(java.lang.String id) {
+    public TipoRegistro getTipoRegistro(Long id) {
         return getFacade().find(id);
     }
 
-    public List<Sala> getItemsAvailableSelectMany() {
+    public List<TipoRegistro> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Sala> getItemsAvailableSelectOne() {
+    public List<TipoRegistro> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Sala.class)
-    public static class SalaControllerConverter implements Converter {
+    @FacesConverter(forClass = TipoRegistro.class)
+    public static class TipoRegistroControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SalaController controller = (SalaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "salaController");
-            return controller.getSala(getKey(value));
+            TipoRegistroController controller = (TipoRegistroController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "tipoRegistroController");
+            return controller.getTipoRegistro(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        Long getKey(String value) {
+            Long key;
+            key = Long.parseLong(value);
             return key;
         }
 
-        String getStringKey(java.lang.String value) {
+        String getStringKey(Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -153,11 +153,11 @@ public class SalaController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Sala) {
-                Sala o = (Sala) object;
-                return getStringKey(o.getNumero());
+            if (object instanceof TipoRegistro) {
+                TipoRegistro o = (TipoRegistro) object;
+                return getStringKey(o.getID());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Sala.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), TipoRegistro.class.getName()});
                 return null;
             }
         }

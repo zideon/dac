@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PedidoEquipamentoEditDlg" widgetVar="PedidoEquipamentoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPedidoEquipamentoTitle}">
+            <h:form id="PedidoEquipamentoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pedidoEquipamentoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPedidoEquipamentoLabel_ID}" for="ID" />
+                        <p:inputText id="ID" value="#{pedidoEquipamentoController.selected.ID}" title="#{bundle.EditPedidoEquipamentoTitle_ID}" />
+                        <p:outputLabel value="#{bundle.EditPedidoEquipamentoLabel_data}" for="data" />
+                        <p:inputText id="data" value="#{pedidoEquipamentoController.selected.data}" title="#{bundle.EditPedidoEquipamentoTitle_data}" />
+                        <p:outputLabel value="#{bundle.EditPedidoEquipamentoLabel_horaInicial}" for="horaInicial" />
+                        <p:inputText id="horaInicial" value="#{pedidoEquipamentoController.selected.horaInicial}" title="#{bundle.EditPedidoEquipamentoTitle_horaInicial}" />
+                        <p:outputLabel value="#{bundle.EditPedidoEquipamentoLabel_horaFinal}" for="horaFinal" />
+                        <p:inputText id="horaFinal" value="#{pedidoEquipamentoController.selected.horaFinal}" title="#{bundle.EditPedidoEquipamentoTitle_horaFinal}" />
+                        <p:outputLabel value="#{bundle.EditPedidoEquipamentoLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{pedidoEquipamentoController.selected.usuario}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pedidoEquipamentoController.update}" value="#{bundle.Save}" update="display,:PedidoEquipamentoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PedidoEquipamentoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PedidoEquipamentoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
