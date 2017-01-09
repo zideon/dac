@@ -40,5 +40,10 @@ public class TipoSala implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s[%d,%s]", getClass().getSimpleName(), getID(),getTipo());
+    }
     
 }
