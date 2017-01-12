@@ -7,6 +7,7 @@ package br.uff.ic.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -60,6 +61,48 @@ public class Sala implements Serializable {
 
     public void setRecursos(List<RecursoSala> recursos) {
         this.recursos = recursos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.numero);
+        hash = 97 * hash + Objects.hashCode(this.tipo);
+        hash = 97 * hash + this.capacidade;
+        hash = 97 * hash + Objects.hashCode(this.recursos);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sala other = (Sala) obj;
+        if (this.capacidade != other.capacidade) {
+            return false;
+        }
+        if (!Objects.equals(this.numero, other.numero)) {
+            return false;
+        }
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.recursos, other.recursos)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Sala{" + "numero=" + numero + ", tipo=" + tipo + ", capacidade=" + capacidade + ", recursos=" + recursos + '}';
     }
     
     

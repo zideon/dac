@@ -3,9 +3,11 @@ package br.uff.ic.controller;
 import br.uff.ic.entities.TipoEquipamento;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
+import br.uff.ic.entities.TipoSala;
 import br.uff.ic.model.TipoEquipamentoFacadeLocal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.model.SelectItem;
 
 @Named("tipoEquipamentoController")
 @SessionScoped
@@ -26,7 +29,6 @@ public class TipoEquipamentoController implements Serializable {
     @EJB
     private TipoEquipamentoFacadeLocal ejbFacade;
 
-    
     private List<TipoEquipamento> items = null;
     private TipoEquipamento selected;
 
@@ -119,8 +121,13 @@ public class TipoEquipamentoController implements Serializable {
         return getFacade().findAll();
     }
 
-    public List<TipoEquipamento> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
+    public List<SelectItem> getItemsAvailableSelectOne() {
+        List<TipoEquipamento> findAll = getFacade().findAll();
+        List<SelectItem> itens = new ArrayList<>();
+        for (TipoEquipamento tipoEquipamento : findAll) {
+            itens.add(new SelectItem(tipoEquipamento, tipoEquipamento.getTipo()));
+        }
+        return itens;
     }
 
     @FacesConverter(forClass = TipoEquipamento.class)
@@ -131,6 +138,7 @@ public class TipoEquipamentoController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
+            System.out.println("valor:" + value);
             TipoEquipamentoController controller = (TipoEquipamentoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "tipoEquipamentoController");
             return controller.getTipoEquipamento(getKey(value));
@@ -138,7 +146,7 @@ public class TipoEquipamentoController implements Serializable {
 
         Long getKey(String value) {
             Long key;
-            key =Long.parseLong(value);
+            key = Long.parseLong(value);
             return key;
         }
 

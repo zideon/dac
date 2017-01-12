@@ -6,6 +6,7 @@
 package br.uff.ic.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +34,11 @@ public class TipoSala implements Serializable {
         this.ID = ID;
     }
 
+    @Override
+    public String toString() {
+        return "TipoSala{" + "ID=" + ID + ", tipo=" + tipo + '}';
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -42,8 +48,34 @@ public class TipoSala implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return String.format("%s[%d,%s]", getClass().getSimpleName(), getID(),getTipo());
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.ID);
+        hash = 59 * hash + Objects.hashCode(this.tipo);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TipoSala other = (TipoSala) obj;
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.ID, other.ID)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

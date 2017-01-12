@@ -126,7 +126,7 @@ public class TipoSalaController implements Serializable {
         List<TipoSala> findAll = getFacade().findAll();
         List<SelectItem> itens = new ArrayList<>();
         for (TipoSala tipoSala : findAll) {
-            itens.add(new SelectItem(tipoSala.getID(),tipoSala.getTipo()));
+            itens.add(new SelectItem(tipoSala,tipoSala.getTipo()));
         }
         return itens;
     }
@@ -139,6 +139,7 @@ public class TipoSalaController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
+            System.out.println("valor:"+value);
             TipoSalaController controller = (TipoSalaController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "tipoSalaController");
             return controller.getTipoSala(getKey(value));

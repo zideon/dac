@@ -6,6 +6,7 @@
 package br.uff.ic.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,6 +53,44 @@ public class ReservaEquipamento implements Serializable {
 
     public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.ID);
+        hash = 67 * hash + Objects.hashCode(this.pedido);
+        hash = 67 * hash + Objects.hashCode(this.equipamento);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ReservaEquipamento other = (ReservaEquipamento) obj;
+        if (!Objects.equals(this.ID, other.ID)) {
+            return false;
+        }
+        if (!Objects.equals(this.pedido, other.pedido)) {
+            return false;
+        }
+        if (!Objects.equals(this.equipamento, other.equipamento)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ReservaEquipamento{" + "ID=" + ID + ", pedido=" + pedido + ", equipamento=" + equipamento + '}';
     }
     
     

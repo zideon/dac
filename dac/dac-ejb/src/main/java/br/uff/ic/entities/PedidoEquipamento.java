@@ -6,6 +6,7 @@
 package br.uff.ic.entities;
 
 import java.util.Calendar;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -76,6 +77,52 @@ public class PedidoEquipamento {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + Objects.hashCode(this.ID);
+        hash = 61 * hash + Objects.hashCode(this.data);
+        hash = 61 * hash + Objects.hashCode(this.horaInicial);
+        hash = 61 * hash + Objects.hashCode(this.horaFinal);
+        hash = 61 * hash + Objects.hashCode(this.usuario);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PedidoEquipamento other = (PedidoEquipamento) obj;
+        if (!Objects.equals(this.ID, other.ID)) {
+            return false;
+        }
+        if (!Objects.equals(this.data, other.data)) {
+            return false;
+        }
+        if (!Objects.equals(this.horaInicial, other.horaInicial)) {
+            return false;
+        }
+        if (!Objects.equals(this.horaFinal, other.horaFinal)) {
+            return false;
+        }
+        if (!Objects.equals(this.usuario, other.usuario)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "PedidoEquipamento{" + "ID=" + ID + ", data=" + data + ", horaInicial=" + horaInicial + ", horaFinal=" + horaFinal + ", usuario=" + usuario + '}';
     }
             
      

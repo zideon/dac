@@ -15,7 +15,12 @@
                         <p:outputLabel value="#{bundle.EditEquipamentoLabel_numeroPatrimonio}" for="numeroPatrimonio" />
                         <p:inputText id="numeroPatrimonio" value="#{equipamentoController.selected.numeroPatrimonio}" title="#{bundle.EditEquipamentoTitle_numeroPatrimonio}" />
                         <p:outputLabel value="#{bundle.EditEquipamentoLabel_tipo}" for="tipo" />
-                        <p:inputText id="tipo" value="#{equipamentoController.selected.tipo}" title="#{bundle.EditEquipamentoTitle_tipo}" />
+                        <p:selectOneMenu id="tipo" value="#{equipamentoController.selected.tipo}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoEquipamentoController.itemsAvailableSelectOne}"
+                                           var="tipoItem"
+                                           itemValue="#{tipoItem}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{equipamentoController.update}" value="#{bundle.Save}" update="display,:EquipamentoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EquipamentoEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="EquipamentoEditDialog.hide()"/>
