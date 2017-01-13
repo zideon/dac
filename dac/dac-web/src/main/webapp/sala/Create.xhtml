@@ -15,8 +15,11 @@
                         <p:outputLabel value="#{bundle.CreateSalaLabel_numero}" for="numero" />
                         <p:inputText id="numero" value="#{salaController.selected.numero}" title="#{bundle.CreateSalaTitle_numero}" />
                         <p:outputLabel value="#{bundle.CreateSalaLabel_tipo}" for="tipo" />
-                        <p:selectOneMenu id="tipo" value="#{salaController.selected.tipo}"  >
-                            <f:selectItems value="#{tipoSalaController.itemsAvailableSelectOne}"/>
+                        <p:selectOneMenu id="tipo" value="#{salaController.selected.tipo}" >
+                            <f:selectItems value="#{tipoSalaController.itemsAvailableSelectOne}"
+                                           var="tipoItem"
+                                           itemValue="#{tipoItem}"
+                                           itemLabel="#{tipoItem.tipo}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateSalaLabel_capacidade}" for="capacidade" />
                         <p:inputText id="capacidade" value="#{salaController.selected.capacidade}" title="#{bundle.CreateSalaTitle_capacidade}" />

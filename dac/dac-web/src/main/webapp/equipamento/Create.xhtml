@@ -16,7 +16,10 @@
                         <p:inputText id="numeroPatrimonio" value="#{equipamentoController.selected.numeroPatrimonio}" title="#{bundle.CreateEquipamentoTitle_numeroPatrimonio}" />
                         <p:outputLabel value="#{bundle.CreateEquipamentoLabel_tipo}" for="tipo" />
                         <p:selectOneMenu id="tipo" value="#{equipamentoController.selected.tipo}" >
-                            <f:selectItems value="#{tipoEquipamentoController.itemsAvailableSelectOne}"/>
+                            <f:selectItems value="#{tipoEquipamentoController.itemsAvailableSelectOne}"
+                                           var="tipoItem"
+                                           itemValue="#{tipoItem}"
+                                           itemLabel="#{tipoItem.tipo}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{equipamentoController.create}" value="#{bundle.Save}" update="display,:EquipamentoListForm:datalist,:growl" oncomplete="handleSubmit(args,'EquipamentoCreateDialog');"/>

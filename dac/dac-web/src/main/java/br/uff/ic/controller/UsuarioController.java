@@ -26,6 +26,7 @@ public class UsuarioController implements Serializable {
     @EJB
     private UsuarioFacadeLocal ejbFacade;
 
+    
     private List<Usuario> items = null;
     private Usuario selected;
 

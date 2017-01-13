@@ -26,6 +26,7 @@ public class PedidoEquipamentoController implements Serializable {
     @EJB
     private PedidoEquipamentoFacadeLocal ejbFacade;
 
+   
     private List<PedidoEquipamento> items = null;
     private PedidoEquipamento selected;
 
@@ -143,7 +144,7 @@ public class PedidoEquipamentoController implements Serializable {
 
         String getStringKey(Long value) {
             StringBuilder sb = new StringBuilder();
-            sb.append(value.toString());
+            sb.append(value);
             return sb.toString();
         }
 

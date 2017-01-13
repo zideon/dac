@@ -26,6 +26,7 @@ public class SalaController implements Serializable {
     @EJB
     private SalaFacadeLocal ejbFacade;
 
+    
     private List<Sala> items = null;
     private Sala selected;
 
@@ -130,11 +131,9 @@ public class SalaController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            Object get = component.getAttributes().get(value);
             SalaController controller = (SalaController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "salaController");
             return controller.getSala(getKey(value));
-            
         }
 
         java.lang.String getKey(String value) {

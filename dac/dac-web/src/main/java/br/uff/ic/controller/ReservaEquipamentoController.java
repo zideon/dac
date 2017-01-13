@@ -25,7 +25,6 @@ public class ReservaEquipamentoController implements Serializable {
 
     @EJB
     private ReservaEquipamentoFacadeLocal ejbFacade;
-
     
     private List<ReservaEquipamento> items = null;
     private ReservaEquipamento selected;

@@ -18,7 +18,8 @@
                         <p:selectOneMenu id="tipo" value="#{registroSalaController.selected.tipo}" >
                             <f:selectItems value="#{tipoRegistroController.itemsAvailableSelectOne}"
                                            var="tipoItem"
-                                           itemValue="#{tipoItem}"/>
+                                           itemValue="#{tipoItem}"
+                                           itemLabel="#{tipoItem.tipo}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateRegistroSalaLabel_reserva}" for="reserva" />
                         <p:selectOneMenu id="reserva" value="#{registroSalaController.selected.reserva}" >

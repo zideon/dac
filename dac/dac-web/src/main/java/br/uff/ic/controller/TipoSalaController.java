@@ -6,11 +6,8 @@ import br.uff.ic.controller.util.JsfUtil.PersistAction;
 import br.uff.ic.model.TipoSalaFacadeLocal;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -21,7 +18,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.SelectItem;
 
 @Named("tipoSalaController")
 @SessionScoped
@@ -30,6 +26,8 @@ public class TipoSalaController implements Serializable {
     @EJB
     private TipoSalaFacadeLocal ejbFacade;
 
+    
+    
     private List<TipoSala> items = null;
     private TipoSala selected;
 
@@ -122,13 +120,8 @@ public class TipoSalaController implements Serializable {
         return getFacade().findAll();
     }
 
-    public List<SelectItem> getItemsAvailableSelectOne() {
-        List<TipoSala> findAll = getFacade().findAll();
-        List<SelectItem> itens = new ArrayList<>();
-        for (TipoSala tipoSala : findAll) {
-            itens.add(new SelectItem(tipoSala,tipoSala.getTipo()));
-        }
-        return itens;
+    public List<TipoSala> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
     }
 
     @FacesConverter(forClass = TipoSala.class)
@@ -139,7 +132,6 @@ public class TipoSalaController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            System.out.println("valor:"+value);
             TipoSalaController controller = (TipoSalaController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "tipoSalaController");
             return controller.getTipoSala(getKey(value));

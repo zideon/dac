@@ -26,7 +26,9 @@ public class PapelController implements Serializable {
 
     @EJB
     private PapelFacadeLocal ejbFacade;
-   
+
+
+    
     private List<Papel> items = null;
     private Papel selected;
 
@@ -144,7 +146,7 @@ public class PapelController implements Serializable {
 
         String getStringKey(Long value) {
             StringBuilder sb = new StringBuilder();
-            sb.append(value.toString());
+             sb.append(value);
             return sb.toString();
         }
 
