@@ -12,10 +12,12 @@
     <h:body>
         <ui:composition template="/admin/template.xhtml">
             <ui:define name="body">
-                <p:panel header="Index">
-                    <p:message>Bem vindo admin</p:message>
+                <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputText value="Bem vindo " />
+                    </h:panelGrid>
                 </p:panel>
-            </ui:define>
+            </ui:define>        
         </ui:composition>
 
     </h:body>

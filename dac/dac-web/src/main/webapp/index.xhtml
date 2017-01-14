@@ -11,11 +11,13 @@
     </h:head>
     <h:body>
         <ui:composition template="template.xhtml">
-            <ui:define name="body">
-                <p:panel header="Index">
-                    <p:message>Bem vindo</p:message>
+             <ui:define name="body">
+                <p:panel id="basic" header="Basic"  style="margin-bottom:20px">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputText value="Bem vindo " />
+                    </h:panelGrid>
                 </p:panel>
-            </ui:define>
+            </ui:define>   
 
 
         </ui:composition>

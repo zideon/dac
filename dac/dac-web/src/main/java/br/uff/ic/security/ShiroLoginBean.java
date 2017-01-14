@@ -74,6 +74,10 @@ public class ShiroLoginBean implements Serializable {
             facesError("Unknown error: " + ex.getMessage());
             log.error(ex.getMessage(), ex);
         }
+        catch (Exception ex) {
+            facesError("Unknown error: " + ex.getMessage());
+            log.error(ex.getMessage(), ex);
+        }
         finally {
             token.clear();
         }
@@ -84,6 +88,7 @@ public class ShiroLoginBean implements Serializable {
      * @param message Error Message
      */
     private void facesError(String message) {
+        System.out.println("deu erro aqui");
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
     }
 
