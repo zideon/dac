@@ -19,8 +19,13 @@
             <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
                 <h:form id="menuForm">
                     <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
-                        <p:menuitem value="#{bundle.Login}" outcome="/login" />
+                        <p:menuitem value="#{bundle.Home}" outcome="/admin/index.xhtml" icon="ui-icon-home"/>
+                        <p:submenu label="#{bundle.Administrador}">                            
+                            <p:menuitem outcome="/admin/usuario/List.xhtml" value="Usuario"/>
+
+                            <p:menuitem outcome="/admin/papel/List.xhtml" value="Papel"/>
+
+                        </p:submenu>
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>
