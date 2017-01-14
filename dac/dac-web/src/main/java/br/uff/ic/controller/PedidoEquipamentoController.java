@@ -67,6 +67,7 @@ public class PedidoEquipamentoController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+     
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PedidoEquipamentoUpdated"));
@@ -86,14 +87,8 @@ public class PedidoEquipamentoController implements Serializable {
         }
         return items;
     }
-    public List<PedidoEquipamento> getItemsUser() {
-        Usuario user = (Usuario) SessionUtil.getParam("usuario");
-        
-        if (items == null) {
-            items = getFacade().findByUsuario(user);
-        }
-        return items;
-    }
+   
+    
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

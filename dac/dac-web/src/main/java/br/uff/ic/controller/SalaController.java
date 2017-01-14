@@ -1,11 +1,13 @@
 package br.uff.ic.controller;
 
+import br.uff.ic.controller.util.BuscaSalaModel;
 import br.uff.ic.entities.Sala;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
 import br.uff.ic.model.SalaFacadeLocal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -28,7 +30,33 @@ public class SalaController implements Serializable {
 
     
     private List<Sala> items = null;
+    
+     private List<Sala> result = null;
+    
     private Sala selected;
+    
+    private BuscaSalaModel buscaSalaModel;
+
+    public BuscaSalaModel getBuscaSalaModel() {
+        return buscaSalaModel;
+    }
+
+    public void setBuscaSalaModel(BuscaSalaModel buscaSalaModel) {
+        this.buscaSalaModel = buscaSalaModel;
+    }
+
+    public List<Sala> getResult() {
+        if (result == null) {
+            result = new ArrayList<>();
+        }
+        return result;
+    }
+
+    public void setResult(List<Sala> result) {
+        this.result = result;
+    }
+    
+    
 
     public SalaController() {
     }
@@ -56,7 +84,13 @@ public class SalaController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-
+    public BuscaSalaModel prepareBusca() {
+        buscaSalaModel = new BuscaSalaModel();
+        return buscaSalaModel;
+    }
+    public void busca() {   
+        result = getFacade().findAll();
+    }
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SalaCreated"));
         if (!JsfUtil.isValidationFailed()) {

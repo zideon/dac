@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <ui:composition>
+
+            <p:dialog id="SalaCreateDlg" widgetVar="BuscaSalaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSalaTitle}">
+                <h:form id="BuscaSalaCreateForm">
+                    <h:panelGroup id="display">
+                        <p:panelGrid columns="2" rendered="#{salaController.buscaSalaModel != null}">
+                            <p:outputLabel value="data:" for="data" />
+                            <p:inputText id="data" value="#{salaController.buscaSalaModel.data}" title="data">
+                                <f:convertDateTime type="date" pattern="d/M/yyyy" />
+                            </p:inputText>
+                            <p:outputLabel value="hora inicial" for="horaInicial" />
+                            <p:inputText id="horaInicial" value="#{salaController.buscaSalaModel.horaInicial}" title="#{bundle.CreatePedidoEquipamentoTitle_horaInicial}" >
+                                <f:convertDateTime type="time" pattern="HH:mm" />
+                            </p:inputText>
+                            <p:outputLabel value="hora final" for="horaFinal" />
+                            <p:inputText id="horaFinal" value="#{salaController.buscaSalaModel.horaFinal}" title="#{bundle.CreatePedidoEquipamentoTitle_horaFinal}" >
+                                <f:convertDateTime type="time" pattern="HH:mm" />
+                            </p:inputText>
+                            <p:outputLabel value="#{bundle.CreateSalaLabel_tipo}" for="tipo" />
+                            <p:selectOneMenu id="tipo" value="#{salaController.buscaSalaModel.tipoSala}" >
+                                <f:selectItems value="#{tipoSalaController.itemsAvailableSelectOne}"
+                                               var="tipoItem"
+                                               itemValue="#{tipoItem}"
+                                               itemLabel="#{tipoItem.tipo}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="capcidade" for="capacidade" />
+                            <p:inputText id="capacidade" value="#{salaController.buscaSalaModel.capacidade}" title="capacidade" />
+                            <p:selectManyCheckbox id="grid" value="#{salaController.buscaSalaModel.recursos}" layout="grid" columns="3">
+                                <f:selectItems value="#{recursoSalaController.itemsAvailableSelectMany}" var="recurso" itemLabel="#{recurso.tipo}" itemValue="#{recurso}" />
+                            </p:selectManyCheckbox>
+                        </p:panelGrid>
+                        <p:commandButton actionListener="#{salaController.busca()}" value="#{bundle.Save}" update="display,:BuscaSalaListForm:datalist,:growl" oncomplete="handleSubmit(args,'BuscaSalaCreateDialog');"/>
+                        <p:commandButton value="#{bundle.Cancel}" onclick="SalaCreateDialog.hide()"/>
+                    </h:panelGroup>
+                </h:form>
+            </p:dialog>
+
+        </ui:composition>
+       
+    </h:body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
+
