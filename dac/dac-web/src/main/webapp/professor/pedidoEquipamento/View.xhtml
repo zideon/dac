@@ -12,16 +12,22 @@
             <h:form id="PedidoEquipamentoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pedidoEquipamentoController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_ID}"/>
-                        <h:outputText value="#{pedidoEquipamentoController.selected.ID}" title="#{bundle.ViewPedidoEquipamentoTitle_ID}"/>
                         <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_data}"/>
-                        <h:outputText value="#{pedidoEquipamentoController.selected.data}" title="#{bundle.ViewPedidoEquipamentoTitle_data}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.data}" title="#{bundle.ViewPedidoEquipamentoTitle_data}">
+                        <f:convertDateTime type="date" pattern="d/M/yyyy" />
+                        </h:outputText>
                         <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_horaInicial}"/>
-                        <h:outputText value="#{pedidoEquipamentoController.selected.horaInicial}" title="#{bundle.ViewPedidoEquipamentoTitle_horaInicial}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.horaInicial}" title="#{bundle.ViewPedidoEquipamentoTitle_horaInicial}">
+                        <f:convertDateTime type="time" pattern="HH:mm" />
+                        </h:outputText>
                         <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_horaFinal}"/>
-                        <h:outputText value="#{pedidoEquipamentoController.selected.horaFinal}" title="#{bundle.ViewPedidoEquipamentoTitle_horaFinal}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.horaFinal}" title="#{bundle.ViewPedidoEquipamentoTitle_horaFinal}">
+                        <f:convertDateTime type="time" pattern="HH:mm" />
+                        </h:outputText>
                         <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_usuario}"/>
                         <h:outputText value="#{pedidoEquipamentoController.selected.usuario}" title="#{bundle.ViewPedidoEquipamentoTitle_usuario}"/>
+                        <h:outputText value="#{bundle.ViewPedidoEquipamentoLabel_tipo}"/>
+                        <h:outputText value="#{pedidoEquipamentoController.selected.tipo}" title="#{bundle.ViewPedidoEquipamentoTitle_tipo}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="PedidoEquipamentoViewDialog.hide()"/>
                 </h:panelGroup>

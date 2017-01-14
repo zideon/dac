@@ -5,12 +5,14 @@
  */
 package br.uff.ic.entities;
 
-import java.util.Calendar;
+import java.util.Date;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -28,16 +30,19 @@ public class PedidoEquipamento {
     private Long ID;
     
     @Temporal(TemporalType.DATE)
-    private Calendar data;
+    private Date data;
     
     @Temporal(TemporalType.TIME)
-    private Calendar horaInicial;
+    private Date horaInicial;
     
     @Temporal(TemporalType.TIME)
-    private Calendar horaFinal;
+    private Date horaFinal;
     
-    @OneToOne
+    @ManyToOne
     private Usuario usuario;
+    
+    @ManyToOne
+    private TipoEquipamento tipo;
 
     public Long getID() {
         return ID;
@@ -47,27 +52,27 @@ public class PedidoEquipamento {
         this.ID = ID;
     }
 
-    public Calendar getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(Calendar data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
-    public Calendar getHoraInicial() {
+    public Date getHoraInicial() {
         return horaInicial;
     }
 
-    public void setHoraInicial(Calendar horaInicial) {
+    public void setHoraInicial(Date horaInicial) {
         this.horaInicial = horaInicial;
     }
 
-    public Calendar getHoraFinal() {
+    public Date getHoraFinal() {
         return horaFinal;
     }
 
-    public void setHoraFinal(Calendar horaFinal) {
+    public void setHoraFinal(Date horaFinal) {
         this.horaFinal = horaFinal;
     }
 
@@ -79,14 +84,23 @@ public class PedidoEquipamento {
         this.usuario = usuario;
     }
 
+    public TipoEquipamento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEquipamento tipo) {
+        this.tipo = tipo;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.ID);
-        hash = 61 * hash + Objects.hashCode(this.data);
-        hash = 61 * hash + Objects.hashCode(this.horaInicial);
-        hash = 61 * hash + Objects.hashCode(this.horaFinal);
-        hash = 61 * hash + Objects.hashCode(this.usuario);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.ID);
+        hash = 37 * hash + Objects.hashCode(this.data);
+        hash = 37 * hash + Objects.hashCode(this.horaInicial);
+        hash = 37 * hash + Objects.hashCode(this.horaFinal);
+        hash = 37 * hash + Objects.hashCode(this.usuario);
+        hash = 37 * hash + Objects.hashCode(this.tipo);
         return hash;
     }
 
@@ -117,13 +131,13 @@ public class PedidoEquipamento {
         if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "PedidoEquipamento{" + "ID=" + ID + ", data=" + data + ", horaInicial=" + horaInicial + ", horaFinal=" + horaFinal + ", usuario=" + usuario + '}';
-    }
+    
             
      
 }

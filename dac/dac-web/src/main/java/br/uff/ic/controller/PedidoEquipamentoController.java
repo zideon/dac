@@ -3,7 +3,9 @@ package br.uff.ic.controller;
 import br.uff.ic.entities.PedidoEquipamento;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
+import br.uff.ic.entities.Usuario;
 import br.uff.ic.model.PedidoEquipamentoFacadeLocal;
+import br.uff.ic.util.SessionUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -53,6 +55,8 @@ public class PedidoEquipamentoController implements Serializable {
 
     public PedidoEquipamento prepareCreate() {
         selected = new PedidoEquipamento();
+        Usuario user  = (Usuario) SessionUtil.getParam("usuario");
+        selected.setUsuario(user);
         initializeEmbeddableKey();
         return selected;
     }
@@ -79,6 +83,14 @@ public class PedidoEquipamentoController implements Serializable {
     public List<PedidoEquipamento> getItems() {
         if (items == null) {
             items = getFacade().findAll();
+        }
+        return items;
+    }
+    public List<PedidoEquipamento> getItemsUser() {
+        Usuario user = (Usuario) SessionUtil.getParam("usuario");
+        
+        if (items == null) {
+            items = getFacade().findByUsuario(user);
         }
         return items;
     }

@@ -19,15 +19,15 @@
             <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
                 <h:form id="menuForm">
                     <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                        <p:menuitem value="#{bundle.Home}" outcome="/assistente/index" icon="ui-icon-home"/>
                         <p:submenu label="#{bundle.Gerente}"> 
-                            <p:menuitem outcome="/equipamento/List.xhtml" value="Equipamento"/>
+                            <p:menuitem outcome="/assistente/equipamento/List.xhtml" value="Equipamento"/>
 
-                            <p:menuitem outcome="/sala/List.xhtml" value="Sala"/>
+                            <p:menuitem outcome="/assistente/sala/List.xhtml" value="Sala"/>
 
-                            <p:menuitem outcome="/tipoEquipamento/List.xhtml" value="TipoEquipamento"/>
+                            <p:menuitem outcome="/assistente/tipoEquipamento/List.xhtml" value="TipoEquipamento"/>
 
-                            <p:menuitem outcome="/tipoSala/List.xhtml" value="TipoSala"/>
+                            <p:menuitem outcome="/assistente/tipoSala/List.xhtml" value="TipoSala"/>
 
                         </p:submenu>
                         <p:submenu label="#{bundle.Administrador}">                            

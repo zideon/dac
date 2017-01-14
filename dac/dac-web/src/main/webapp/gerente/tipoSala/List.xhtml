@@ -6,18 +6,18 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/gerente/template.xhtml">
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListTipoRegistroTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListTipoSalaTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="TipoRegistroListForm">
-                <p:panel header="#{bundle.ListTipoRegistroTitle}">
-                    <p:dataTable id="datalist" value="#{tipoRegistroController.items}" var="item"
-                                 selectionMode="single" selection="#{tipoRegistroController.selected}"
+            <h:form id="TipoSalaListForm">
+                <p:panel header="#{bundle.ListTipoSalaTitle}">
+                    <p:dataTable id="datalist" value="#{tipoSalaController.items}" var="item"
+                                 selectionMode="single" selection="#{tipoSalaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.ID}"
                                  rows="10"
@@ -29,21 +29,21 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTipoRegistroTitle_ID}"/>
+                                <h:outputText value="#{bundle.ListTipoSalaTitle_ID}"/>
                             </f:facet>
                             <h:outputText value="#{item.ID}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTipoRegistroTitle_tipo}"/>
+                                <h:outputText value="#{bundle.ListTipoSalaTitle_tipo}"/>
                             </f:facet>
                             <h:outputText value="#{item.tipo}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{tipoRegistroController.prepareCreate}" update=":TipoRegistroCreateForm" oncomplete="PF('TipoRegistroCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TipoRegistroViewForm" oncomplete="PF('TipoRegistroViewDialog').show()" disabled="#{empty tipoRegistroController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TipoRegistroEditForm" oncomplete="PF('TipoRegistroEditDialog').show()" disabled="#{empty tipoRegistroController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{tipoRegistroController.destroy}" update=":growl,datalist" disabled="#{empty tipoRegistroController.selected}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{tipoSalaController.prepareCreate}" update=":TipoSalaCreateForm" oncomplete="PF('TipoSalaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":TipoSalaViewForm" oncomplete="PF('TipoSalaViewDialog').show()" disabled="#{empty tipoSalaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":TipoSalaEditForm" oncomplete="PF('TipoSalaEditDialog').show()" disabled="#{empty tipoSalaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{tipoSalaController.destroy}" update=":growl,datalist" disabled="#{empty tipoSalaController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

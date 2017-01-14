@@ -5,6 +5,8 @@
  */
 package br.uff.ic.security;
 
+import br.uff.ic.model.UsuarioFacadeLocal;
+import br.uff.ic.util.SessionUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -18,17 +20,24 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import javax.ejb.EJB;
 
 @Named
 @Stateless
 @ViewScoped
 public class ShiroLoginBean implements Serializable {
+
+    @EJB
+    private UsuarioFacadeLocal usuarioFacade;
+    
     private static final Logger log = LoggerFactory.getLogger(ShiroLoginBean.class);
 
     private String username;
     private String password;
     private Boolean rememberMe;
 
+    
+    
     public ShiroLoginBean() {
     }
 
@@ -41,9 +50,8 @@ public class ShiroLoginBean implements Serializable {
         UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword(), getRememberMe());
 
         try {
-            System.out.println("senha:"+password);
             subject.login(token);
-
+            SessionUtil.setParam("usuario", usuarioFacade.autentificar(getUsername(), getPassword()));
             if (subject.hasRole("ADMINISTRADOR")) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("admin/index.xhtml");
             }else if (subject.hasRole("GERENTE")) {

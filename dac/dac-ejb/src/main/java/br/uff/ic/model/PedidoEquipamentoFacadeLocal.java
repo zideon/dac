@@ -6,6 +6,7 @@
 package br.uff.ic.model;
 
 import br.uff.ic.entities.PedidoEquipamento;
+import br.uff.ic.entities.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface PedidoEquipamentoFacadeLocal {
     List<PedidoEquipamento> findRange(int[] range);
 
     int count();
+    
+    List<PedidoEquipamento> findByUsuario(Usuario usuario);
     
 }

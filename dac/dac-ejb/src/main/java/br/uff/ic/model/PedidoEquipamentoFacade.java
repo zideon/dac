@@ -6,6 +6,8 @@
 package br.uff.ic.model;
 
 import br.uff.ic.entities.PedidoEquipamento;
+import br.uff.ic.entities.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +22,8 @@ public class PedidoEquipamentoFacade extends AbstractFacade<PedidoEquipamento> i
     @PersistenceContext(unitName = "dac")
     private EntityManager em;
 
+    private final Class type;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -27,6 +31,13 @@ public class PedidoEquipamentoFacade extends AbstractFacade<PedidoEquipamento> i
 
     public PedidoEquipamentoFacade() {
         super(PedidoEquipamento.class);
+        type = PedidoEquipamento.class;
+    }
+
+    @Override
+    public List<PedidoEquipamento> findByUsuario(Usuario usuario) {
+       String queryString = "select u from " + type.getName() +" u where u.usuario=:usuario";
+        return  em.createQuery(queryString,type).setParameter("usuario", usuario).getResultList();
     }
     
 }

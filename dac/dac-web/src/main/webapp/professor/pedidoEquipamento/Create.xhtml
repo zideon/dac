@@ -12,20 +12,24 @@
             <h:form id="PedidoEquipamentoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pedidoEquipamentoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePedidoEquipamentoLabel_ID}" for="ID" />
-                        <p:inputText id="ID" value="#{pedidoEquipamentoController.selected.ID}" title="#{bundle.CreatePedidoEquipamentoTitle_ID}" />
                         <p:outputLabel value="#{bundle.CreatePedidoEquipamentoLabel_data}" for="data" />
-                        <p:inputText id="data" value="#{pedidoEquipamentoController.selected.data}" title="#{bundle.CreatePedidoEquipamentoTitle_data}" />
+                        <p:inputText id="data" value="#{pedidoEquipamentoController.selected.data}" title="#{bundle.CreatePedidoEquipamentoTitle_data}">
+                            <f:convertDateTime type="date" pattern="d/M/yyyy" />
+                        </p:inputText>
                         <p:outputLabel value="#{bundle.CreatePedidoEquipamentoLabel_horaInicial}" for="horaInicial" />
-                        <p:inputText id="horaInicial" value="#{pedidoEquipamentoController.selected.horaInicial}" title="#{bundle.CreatePedidoEquipamentoTitle_horaInicial}" />
+                        <p:inputText id="horaInicial" value="#{pedidoEquipamentoController.selected.horaInicial}" title="#{bundle.CreatePedidoEquipamentoTitle_horaInicial}" >
+                            <f:convertDateTime type="time" pattern="HH:mm" />
+                        </p:inputText>
                         <p:outputLabel value="#{bundle.CreatePedidoEquipamentoLabel_horaFinal}" for="horaFinal" />
-                        <p:inputText id="horaFinal" value="#{pedidoEquipamentoController.selected.horaFinal}" title="#{bundle.CreatePedidoEquipamentoTitle_horaFinal}" />
-                        <p:outputLabel value="#{bundle.CreatePedidoEquipamentoLabel_usuario}" for="usuario" />
-                        <p:selectOneMenu id="usuario" value="#{pedidoEquipamentoController.selected.usuario}" >
-                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
-                                           var="usuarioItem"
-                                           itemValue="#{usuarioItem}"
-                                           itemLabel="#{usuarioItem.nome}"/>
+                        <p:inputText id="horaFinal" value="#{pedidoEquipamentoController.selected.horaFinal}" title="#{bundle.CreatePedidoEquipamentoTitle_horaFinal}" >
+                            <f:convertDateTime type="time" pattern="HH:mm" />
+                        </p:inputText>
+                        <p:outputLabel value="#{bundle.CreateEquipamentoLabel_tipo}" for="tipo" />
+                        <p:selectOneMenu id="tipo" value="#{pedidoEquipamentoController.selected.tipo}" >
+                            <f:selectItems value="#{tipoEquipamentoController.itemsAvailableSelectOne}"
+                                           var="tipoItem"
+                                           itemValue="#{tipoItem}"
+                                           itemLabel="#{tipoItem.tipo}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{pedidoEquipamentoController.create}" value="#{bundle.Save}" update="display,:PedidoEquipamentoListForm:datalist,:growl" oncomplete="handleSubmit(args,'PedidoEquipamentoCreateDialog');"/>

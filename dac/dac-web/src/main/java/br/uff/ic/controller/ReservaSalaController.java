@@ -3,6 +3,7 @@ package br.uff.ic.controller;
 import br.uff.ic.entities.ReservaSala;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
+import br.uff.ic.entities.Sala;
 import br.uff.ic.model.ReservaSalaFacadeLocal;
 
 import java.io.Serializable;
@@ -25,7 +26,6 @@ public class ReservaSalaController implements Serializable {
 
     @EJB
     private ReservaSalaFacadeLocal ejbFacade;
-
     
     private List<ReservaSala> items = null;
     private ReservaSala selected;
@@ -53,6 +53,7 @@ public class ReservaSalaController implements Serializable {
 
     public ReservaSala prepareCreate() {
         selected = new ReservaSala();
+        selected.setSala(new Sala());
         initializeEmbeddableKey();
         return selected;
     }
