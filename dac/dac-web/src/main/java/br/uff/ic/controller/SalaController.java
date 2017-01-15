@@ -4,6 +4,8 @@ import br.uff.ic.controller.util.BuscaSalaModel;
 import br.uff.ic.entities.Sala;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
+import br.uff.ic.entities.ReservaSala;
+import br.uff.ic.model.ReservaSalaFacadeLocal;
 import br.uff.ic.model.SalaFacadeLocal;
 
 import java.io.Serializable;
@@ -26,7 +28,12 @@ import javax.faces.convert.FacesConverter;
 public class SalaController implements Serializable {
 
     @EJB
+    private ReservaSalaFacadeLocal reservaSalaFacade;
+
+    @EJB
     private SalaFacadeLocal ejbFacade;
+    
+    
 
     
     private List<Sala> items = null;
@@ -88,8 +95,21 @@ public class SalaController implements Serializable {
         buscaSalaModel = new BuscaSalaModel();
         return buscaSalaModel;
     }
-    public void busca() {   
-        result = getFacade().findAll();
+    public void busca() {  
+        result = getFacade().findBusca(buscaSalaModel.getData(), buscaSalaModel.getHoraInicial(), 
+                buscaSalaModel.getHoraFinal(), buscaSalaModel.getCapacidade(), buscaSalaModel.getTipoSala(), buscaSalaModel.getRecursos());
+    }
+    public void salvarReserva() {
+        if (selected != null && buscaSalaModel!=null) {
+            ReservaSala s = new ReservaSala();
+            s.setData(buscaSalaModel.getData());
+            s.setHoraInicial(buscaSalaModel.getHoraInicial());
+            s.setHoraFinal(buscaSalaModel.getHoraFinal());
+            s.setSala(selected);
+            reservaSalaFacade.create(s);
+            JsfUtil.addSuccessMessage("reserva criada com sucesso");
+            result.clear();
+        }
     }
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SalaCreated"));
@@ -97,7 +117,6 @@ public class SalaController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SalaUpdated"));
     }

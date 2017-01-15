@@ -47,7 +47,7 @@
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="buscaButton" icon="ui-icon-search"   value="Buscar" actionListener="#{salaController.prepareBusca()}" update=":BuscaSalaCreateForm" oncomplete="PF('BuscaSalaCreateDialog').show()"/>
-                            <p:commandButton id="selecionaButton" icon="ui-icon-plus"  value="Selecionar" actionListener="#{salaController.destroy}" update=":growl,datalist" disabled="#{empty salaController.selected}"/>
+                            <p:commandButton id="selecionaButton" icon="ui-icon-plus"  value="Selecionar" actionListener="#{salaController.salvarReserva()}" update=":growl,datalist" disabled="#{empty salaController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

@@ -39,6 +39,7 @@
                             <p:inputText id="capacidade" value="#{salaController.buscaSalaModel.capacidade}" title="capacidade" />
                             <p:selectManyCheckbox id="grid" value="#{salaController.buscaSalaModel.recursos}" layout="grid" columns="3">
                                 <f:selectItems value="#{recursoSalaController.itemsAvailableSelectMany}" var="recurso" itemLabel="#{recurso.tipo}" itemValue="#{recurso}" />
+                                <f:converter converterId="br.uff.ic.RecursoSalaControllerConverter" />
                             </p:selectManyCheckbox>
                         </p:panelGrid>
                         <p:commandButton actionListener="#{salaController.busca()}" value="#{bundle.Save}" update="display,:BuscaSalaListForm:datalist,:growl" oncomplete="handleSubmit(args,'BuscaSalaCreateDialog');"/>

@@ -22,7 +22,7 @@ import javax.persistence.SequenceGenerator;
 @SequenceGenerator(name = "SequenciaRegistroEquipamento", sequenceName = "seq_id_registro_equipamento")
 public class RegistroEquipamento implements Serializable {
     @Id
-    @GeneratedValue(generator = "SequenciaRegistroSala", strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "SequenciaRegistroEquipamento", strategy = GenerationType.AUTO)
     private Long ID;
     
     @OneToOne

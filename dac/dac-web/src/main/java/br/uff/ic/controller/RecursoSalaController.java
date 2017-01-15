@@ -123,7 +123,7 @@ public class RecursoSalaController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = RecursoSala.class)
+    @FacesConverter(forClass = RecursoSala.class,value = "br.uff.ic.RecursoSalaControllerConverter")
     public static class RecursoSalaControllerConverter implements Converter {
 
         @Override

@@ -6,7 +6,8 @@
 package br.uff.ic.entities;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,13 +30,13 @@ public class ReservaSala implements Serializable {
     private Long ID;
     
     @Temporal(TemporalType.DATE)
-    private Calendar data;
+    private Date data;
     
     @Temporal(TemporalType.TIME)
-    private Calendar horaInicial;
+    private Date horaInicial;
     
     @Temporal(TemporalType.TIME)
-    private Calendar horaFinal;
+    private Date horaFinal;
     
     @OneToOne
     private Sala sala;
@@ -48,27 +49,27 @@ public class ReservaSala implements Serializable {
         this.ID = ID;
     }
 
-    public Calendar getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(Calendar data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
-    public Calendar getHoraInicial() {
+    public Date getHoraInicial() {
         return horaInicial;
     }
 
-    public void setHoraInicial(Calendar horaInicial) {
+    public void setHoraInicial(Date horaInicial) {
         this.horaInicial = horaInicial;
     }
 
-    public Calendar getHoraFinal() {
+    public Date getHoraFinal() {
         return horaFinal;
     }
 
-    public void setHoraFinal(Calendar horaFinal) {
+    public void setHoraFinal(Date horaFinal) {
         this.horaFinal = horaFinal;
     }
 

@@ -5,7 +5,10 @@
  */
 package br.uff.ic.model;
 
+import br.uff.ic.entities.RecursoSala;
 import br.uff.ic.entities.Sala;
+import br.uff.ic.entities.TipoSala;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +33,5 @@ public interface SalaFacadeLocal {
 
     int count();
     
+     List<Sala> findBusca(Date data,Date inicio,Date fim , int capcidade , TipoSala tipo, List<RecursoSala> recursos);
 }
