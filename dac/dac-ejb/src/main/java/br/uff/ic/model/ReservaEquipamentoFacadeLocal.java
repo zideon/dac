@@ -6,6 +6,7 @@
 package br.uff.ic.model;
 
 import br.uff.ic.entities.ReservaEquipamento;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +31,5 @@ public interface ReservaEquipamentoFacadeLocal {
 
     int count();
     
+     List<ReservaEquipamento> findValidasWithDataCPF(Date data,String CPF);
 }

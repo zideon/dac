@@ -4,8 +4,10 @@ import br.uff.ic.entities.RegistroEquipamento;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
 import br.uff.ic.model.RegistroEquipamentoFacadeLocal;
+import br.uff.ic.model.TipoRegistroFacadeLocal;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,6 +27,9 @@ public class RegistroEquipamentoController implements Serializable {
 
     @EJB
     private RegistroEquipamentoFacadeLocal ejbFacade;
+    
+    @EJB
+    private TipoRegistroFacadeLocal tipoRegistroFacade;
 
     
     private List<RegistroEquipamento> items = null;
@@ -63,6 +68,18 @@ public class RegistroEquipamentoController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    public void createDevolucao() {
+        if(selected!=null){
+            RegistroEquipamento novo = new RegistroEquipamento();
+            Date data = new Date();
+            novo.setData(data);
+            novo.setHora(data);
+            novo.setReserva(selected.getReserva());
+            novo.setTipo(tipoRegistroFacade.find(3L));
+            ejbFacade.create(novo);
+            JsfUtil.addSuccessMessage("registro de devolução criado com sucesso");
+        }
+    }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RegistroEquipamentoUpdated"));
@@ -83,6 +100,12 @@ public class RegistroEquipamentoController implements Serializable {
         return items;
     }
 
+    public List<RegistroEquipamento> getItemsComDefeito() {
+            return getFacade().findByTipo("DEFEITO");
+    }
+    public List<RegistroEquipamento> getItemsRetirados() {
+            return  getFacade().findByTipo("RETIRADA");
+    }
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

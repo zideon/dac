@@ -20,36 +20,15 @@
                 <h:form id="menuForm">
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/assistente/index" icon="ui-icon-home"/>
-                        <p:submenu label="#{bundle.Gerente}"> 
-                            <p:menuitem outcome="/assistente/equipamento/List.xhtml" value="Equipamento"/>
-
-                            <p:menuitem outcome="/assistente/sala/List.xhtml" value="Sala"/>
-
-                            <p:menuitem outcome="/assistente/tipoEquipamento/List.xhtml" value="TipoEquipamento"/>
-
-                            <p:menuitem outcome="/assistente/tipoSala/List.xhtml" value="TipoSala"/>
+                        <p:submenu label="#{bundle.Assistente}"> 
+                            <p:menuitem outcome="/assistente/selecionarReservaEquipamento.xhtml" value="Reservas Equipamentos"/>
+                             <p:menuitem outcome="/assistente/registroEquipamento/ListDefeitos.xhtml" value="Defeitos Equipamentos"/>
+                              <p:menuitem outcome="/assistente/registroEquipamento/ListRetirados.xhtml" value="Retirados Equipamentos"/>
+                               <p:menuitem outcome="/assistente/registroSala/ListDefeitos.xhtml" value="Defeito Salas"/>
+                                <p:menuitem outcome="/assistente/registroSala/ListRetirados.xhtml" value="Retirados Salas"/>
 
                         </p:submenu>
-                        <p:submenu label="#{bundle.Administrador}">                            
-                            <p:menuitem outcome="/usuario/List.xhtml" value="Usuario"/>
-
-                            <p:menuitem outcome="/papel/List.xhtml" value="Papel"/>
-
-                            <p:menuitem outcome="/pedidoEquipamento/List.xhtml" value="PedidoEquipamento"/>
-
-                            <p:menuitem outcome="/recursoSala/List.xhtml" value="RecursoSala"/>
-
-                            <p:menuitem outcome="/registroEquipamento/List.xhtml" value="RegistroEquipamento"/>
-
-                            <p:menuitem outcome="/registroSala/List.xhtml" value="RegistroSala"/>
-
-                            <p:menuitem outcome="/reservaEquipamento/List.xhtml" value="ReservaEquipamento"/>
-
-                            <p:menuitem outcome="/reservaSala/List.xhtml" value="ReservaSala"/>
-
-                            <p:menuitem outcome="/tipoRegistro/List.xhtml" value="TipoRegistro"/>
-
-                        </p:submenu>
+                        
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>

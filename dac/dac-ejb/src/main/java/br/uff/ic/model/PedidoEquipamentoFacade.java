@@ -5,12 +5,16 @@
  */
 package br.uff.ic.model;
 
+import br.uff.ic.entities.Equipamento;
 import br.uff.ic.entities.PedidoEquipamento;
 import br.uff.ic.entities.Usuario;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -38,6 +42,20 @@ public class PedidoEquipamentoFacade extends AbstractFacade<PedidoEquipamento> i
     public List<PedidoEquipamento> findByUsuario(Usuario usuario) {
        String queryString = "select u from " + type.getName() +" u where u.usuario=:usuario";
         return  em.createQuery(queryString,type).setParameter("usuario", usuario).getResultList();
+    }
+
+    @Override
+    public List<PedidoEquipamento> findValidosWithDataAtual(Date data) {
+        String queryString = "select s from PedidoEquipamento s where ( s.data >:data"
+                + " or ( s.data =:data and s.horaInicial>=:hora) )"
+                + " and s NOT IN (select r.pedido from ReservaEquipamento r)";
+
+
+        TypedQuery<PedidoEquipamento> setParameter = em.createQuery(queryString, type)
+                .setParameter("data", data, TemporalType.DATE)
+                .setParameter("hora", data, TemporalType.TIME);
+        return setParameter.getResultList();
+
     }
     
 }

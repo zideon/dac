@@ -4,8 +4,10 @@ import br.uff.ic.entities.RegistroSala;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
 import br.uff.ic.model.RegistroSalaFacadeLocal;
+import br.uff.ic.model.TipoRegistroFacadeLocal;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,6 +24,9 @@ import javax.faces.convert.FacesConverter;
 @Named("registroSalaController")
 @SessionScoped
 public class RegistroSalaController implements Serializable {
+
+    @EJB
+    private TipoRegistroFacadeLocal tipoRegistroFacade;
 
     @EJB
     private RegistroSalaFacadeLocal ejbFacade;
@@ -63,6 +68,18 @@ public class RegistroSalaController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    public void createDevolucao() {
+        if(selected!=null){
+            RegistroSala novo = new RegistroSala();
+            Date data = new Date();
+            novo.setData(data);
+            novo.setHora(data);
+            novo.setReserva(selected.getReserva());
+            novo.setTipo(tipoRegistroFacade.find(3L));
+            ejbFacade.create(novo);
+            JsfUtil.addSuccessMessage("registro de devolução criado com sucesso");
+        }
+    }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RegistroSalaUpdated"));
@@ -81,6 +98,12 @@ public class RegistroSalaController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+    public List<RegistroSala> getItemsComDefeito() {
+            return getFacade().findByTipo("DEFEITO");
+    }
+    public List<RegistroSala> getItemsRetirados() {
+            return  getFacade().findByTipo("RETIRADA");
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

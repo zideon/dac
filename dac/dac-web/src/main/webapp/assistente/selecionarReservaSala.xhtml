@@ -6,53 +6,55 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/gerente/template.xhtml">
+    <ui:composition template="/assistente/template.xhtml">
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListReservaEquipamentoTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListReservaSalaTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="ReservaEquipamentoListForm">
-                <p:panel header="#{bundle.ListReservaEquipamentoTitle}">
-                    <p:dataTable id="datalist" value="#{reservaEquipamentoController.items}" var="item"
-                                 selectionMode="single" selection="#{reservaEquipamentoController.selected}"
+            <h:form id="SelecionaReservaSalaListForm">
+                <p:panel header="#{bundle.ListReservaSalaTitle}">
+                    <p:dataTable id="datalist" value="#{reservaSalaController.buscaPorCPF}" var="item"
+                                 selectionMode="single" selection="#{reservaSalaController.selected}"
                                  paginator="true"
                                  rowKey="#{item.ID}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="viewButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="viewButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="buscaButton createButton"/>
+                        <p:ajax event="rowUnselect" update="buscaButton createButton"/>
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReservaEquipamentoTitle_ID}"/>
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_ID}"/>
                             </f:facet>
                             <h:outputText value="#{item.ID}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReservaEquipamentoTitle_pedido}"/>
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_pedido}"/>
                             </f:facet>
                             <h:outputText value="#{item.pedido}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListReservaEquipamentoTitle_equipamento}"/>
+                                <h:outputText value="#{bundle.ListReservaSalaTitle_equipamento}"/>
                             </f:facet>
                             <h:outputText value="#{item.equipamento}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ReservaEquipamentoViewForm" oncomplete="PF('ReservaEquipamentoViewDialog').show()" disabled="#{empty reservaEquipamentoController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{reservaEquipamentoController.destroy}" update=":growl,datalist" disabled="#{empty reservaEquipamentoController.selected}"/>
+                            <p:commandButton id="buscaButton"   icon="ui-icon-search" value="Buscar por CPF" update=":SelecionaReservaSalaViewForm" oncomplete="PF('SelecionaReservaSalaViewDialog').show()" />
+                            <p:commandButton id="createButton" icon="ui-icon-plus"  value="Criar registro" actionListener="#{reservaSalaController.prepareCreateRegistro()}" 
+                                             update=":CriarRegistroSalaViewForm" disabled="#{empty reservaSalaController.selected}"  oncomplete="PF('CriarRegistroSalaViewDialog').show()"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
-            <ui:include src="View.xhtml"/>
+            <ui:include src="buscaCPFSala.xhtml"/>
+            <ui:include src="criarRegistroSala.xhtml"/>
         </ui:define>
     </ui:composition>
 

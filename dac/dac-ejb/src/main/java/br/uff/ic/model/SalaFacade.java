@@ -49,23 +49,16 @@ public class SalaFacade extends AbstractFacade<Sala> implements SalaFacadeLocal 
 
         String queryString = "select s from Sala s where s.capacidade >=:capacidade"
                 + " and s.tipo=:tipo"
-                + " and s NOT IN (select r.sala from ReservaSala r where  r.data=:data and ((r.horaInicial<=:horaInicial and r.horaInicial>=:horaInicial) or (r.horaInicial<=:horaFinal and r.horaFinal>=:horaFinal)))";
+                + " and s NOT IN (select r.sala from ReservaSala r where  r.data=:data and ((r.horaInicial<=:horaInicial and r.horaFinal>=:horaInicial) or (r.horaInicial<=:horaFinal and r.horaFinal>=:horaFinal)))";
 
-//        if (recursos != null && !recursos.isEmpty()) {
-//            queryString = queryString + " and size(s.recursos) >= :tam"
-//                    + " and size(s.recursos) = (select count(e) from RecursoSala e where (e MEMBER OF s.recursos) and (e in :recursos)) ";
-//        }
+
         TypedQuery<Sala> setParameter = em.createQuery(queryString, type)
                 .setParameter("data", data, TemporalType.DATE)
                 .setParameter("horaInicial", inicio, TemporalType.TIME)
                 .setParameter("horaFinal", fim, TemporalType.TIME)
                 .setParameter("capacidade", capacidade)
                 .setParameter("tipo", tipo);
-//       if (recursos != null && !recursos.isEmpty()) {         
-//        setParameter.setParameter("recursos", recursos)
-//                .setParameter("tam", recursos.size());
-//       }
-//        
+
         List<Sala> resultList = setParameter .getResultList();
 
         List<Sala> saida = new ArrayList<>();

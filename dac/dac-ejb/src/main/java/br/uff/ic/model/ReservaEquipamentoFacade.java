@@ -5,10 +5,15 @@
  */
 package br.uff.ic.model;
 
+import br.uff.ic.entities.PedidoEquipamento;
 import br.uff.ic.entities.ReservaEquipamento;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -20,6 +25,9 @@ public class ReservaEquipamentoFacade extends AbstractFacade<ReservaEquipamento>
     @PersistenceContext(unitName = "dac")
     private EntityManager em;
 
+    private final Class type;
+    
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -27,6 +35,24 @@ public class ReservaEquipamentoFacade extends AbstractFacade<ReservaEquipamento>
 
     public ReservaEquipamentoFacade() {
         super(ReservaEquipamento.class);
+        this.type =ReservaEquipamento.class;
+    }
+
+    @Override
+    public List<ReservaEquipamento> findValidasWithDataCPF(Date data,String CPF) {
+        String queryString = "select s from ReservaEquipamento s where s.pedido.data =:data"
+                + " and s.pedido.usuario.cpf = :cpf"
+                + " and (s.pedido.horaInicial<=:hora and s.pedido.horaFinal>= :hora )"
+                + " and s NOT IN (select r.reserva from RegistroEquipamento r where r.tipo.tipo = 'RETIRADA')"
+                + " and s NOT IN (select r.reserva from RegistroEquipamento r where r.tipo.tipo = 'DEVOLUCAO')"
+                + " and s NOT IN (select r.reserva from RegistroEquipamento r where r.tipo.tipo = 'DEFEITO')";
+
+
+        TypedQuery<ReservaEquipamento> setParameter = em.createQuery(queryString, type)
+                 .setParameter("cpf", CPF)
+                .setParameter("data", data, TemporalType.DATE)
+                .setParameter("hora", data, TemporalType.TIME);
+        return setParameter.getResultList();
     }
     
 }

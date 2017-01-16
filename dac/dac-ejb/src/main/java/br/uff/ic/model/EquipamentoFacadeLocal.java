@@ -6,6 +6,8 @@
 package br.uff.ic.model;
 
 import br.uff.ic.entities.Equipamento;
+import br.uff.ic.entities.TipoEquipamento;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +31,7 @@ public interface EquipamentoFacadeLocal {
     List<Equipamento> findRange(int[] range);
 
     int count();
+    
+    List<Equipamento> findPedido(TipoEquipamento tipo, Date data, Date horarioInicial , Date horarioFinal );
     
 }

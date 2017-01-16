@@ -6,9 +6,12 @@
 package br.uff.ic.model;
 
 import br.uff.ic.entities.RegistroEquipamento;
+import br.uff.ic.entities.RegistroSala;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -19,7 +22,8 @@ public class RegistroEquipamentoFacade extends AbstractFacade<RegistroEquipament
 
     @PersistenceContext(unitName = "dac")
     private EntityManager em;
-
+    
+    private final Class type;
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -27,6 +31,17 @@ public class RegistroEquipamentoFacade extends AbstractFacade<RegistroEquipament
 
     public RegistroEquipamentoFacade() {
         super(RegistroEquipamento.class);
+        this.type = RegistroEquipamento.class;
+    }
+
+    @Override
+    public List<RegistroEquipamento> findByTipo(String tipo) {
+        String queryString = "select s from RegistroEquipamento s where s.tipo.tipo=:tipo";
+
+
+        TypedQuery<RegistroEquipamento> setParameter = em.createQuery(queryString, type)
+                .setParameter("tipo", tipo);
+        return setParameter.getResultList();
     }
     
 }

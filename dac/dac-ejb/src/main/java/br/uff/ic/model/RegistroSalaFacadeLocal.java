@@ -29,5 +29,6 @@ public interface RegistroSalaFacadeLocal {
     List<RegistroSala> findRange(int[] range);
 
     int count();
+    List<RegistroSala> findByTipo(String tipo);
     
 }

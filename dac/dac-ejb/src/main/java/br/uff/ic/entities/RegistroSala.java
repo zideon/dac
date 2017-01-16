@@ -6,6 +6,7 @@
 package br.uff.ic.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -30,6 +33,29 @@ public class RegistroSala implements Serializable {
     
     @OneToOne
     private ReservaSala reserva;
+    
+    @Temporal(TemporalType.DATE)
+    private Date data;
+    @Temporal(TemporalType.TIME)
+    private Date hora;
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+    
+    
 
     public Long getID() {
         return ID;
@@ -57,15 +83,17 @@ public class RegistroSala implements Serializable {
 
     @Override
     public String toString() {
-        return "RegistroSala{" + "ID=" + ID + ", tipo=" + tipo + ", reserva=" + reserva + '}';
+        return "RegistroSala{" + "ID=" + ID + ", tipo=" + tipo + ", reserva=" + reserva + ", data=" + data + ", hora=" + hora + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.ID);
-        hash = 79 * hash + Objects.hashCode(this.tipo);
-        hash = 79 * hash + Objects.hashCode(this.reserva);
+        hash = 23 * hash + Objects.hashCode(this.ID);
+        hash = 23 * hash + Objects.hashCode(this.tipo);
+        hash = 23 * hash + Objects.hashCode(this.reserva);
+        hash = 23 * hash + Objects.hashCode(this.data);
+        hash = 23 * hash + Objects.hashCode(this.hora);
         return hash;
     }
 
@@ -90,8 +118,15 @@ public class RegistroSala implements Serializable {
         if (!Objects.equals(this.reserva, other.reserva)) {
             return false;
         }
+        if (!Objects.equals(this.data, other.data)) {
+            return false;
+        }
+        if (!Objects.equals(this.hora, other.hora)) {
+            return false;
+        }
         return true;
     }
+
     
     
 }

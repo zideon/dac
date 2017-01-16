@@ -6,6 +6,7 @@
 package br.uff.ic.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -30,6 +33,30 @@ public class RegistroEquipamento implements Serializable {
     
     @OneToOne
     private ReservaEquipamento reserva;
+    
+    
+    @Temporal(TemporalType.DATE)
+    private Date data;
+    @Temporal(TemporalType.TIME)
+    private Date hora;
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+    
+    
 
     public Long getID() {
         return ID;
@@ -56,16 +83,13 @@ public class RegistroEquipamento implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "RegistroEquipamento{" + "ID=" + ID + ", tipo=" + tipo + ", reserva=" + reserva + '}';
-    }
-
-    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.ID);
-        hash = 67 * hash + Objects.hashCode(this.tipo);
-        hash = 67 * hash + Objects.hashCode(this.reserva);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.ID);
+        hash = 97 * hash + Objects.hashCode(this.tipo);
+        hash = 97 * hash + Objects.hashCode(this.reserva);
+        hash = 97 * hash + Objects.hashCode(this.data);
+        hash = 97 * hash + Objects.hashCode(this.hora);
         return hash;
     }
 
@@ -90,8 +114,21 @@ public class RegistroEquipamento implements Serializable {
         if (!Objects.equals(this.reserva, other.reserva)) {
             return false;
         }
+        if (!Objects.equals(this.data, other.data)) {
+            return false;
+        }
+        if (!Objects.equals(this.hora, other.hora)) {
+            return false;
+        }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "RegistroEquipamento{" + "ID=" + ID + ", tipo=" + tipo + ", reserva=" + reserva + ", data=" + data + ", hora=" + hora + '}';
+    }
+
+    
     
     
 }

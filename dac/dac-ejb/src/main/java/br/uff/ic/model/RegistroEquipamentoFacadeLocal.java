@@ -30,4 +30,5 @@ public interface RegistroEquipamentoFacadeLocal {
 
     int count();
     
+    List<RegistroEquipamento> findByTipo(String tipo);
 }

@@ -3,9 +3,14 @@ package br.uff.ic.controller;
 import br.uff.ic.entities.Equipamento;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
+import br.uff.ic.entities.PedidoEquipamento;
+import br.uff.ic.entities.ReservaEquipamento;
 import br.uff.ic.model.EquipamentoFacadeLocal;
+import br.uff.ic.model.PedidoEquipamentoFacadeLocal;
+import br.uff.ic.model.ReservaEquipamentoFacadeLocal;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,13 +29,38 @@ import javax.faces.convert.FacesConverter;
 public class EquipamentoController implements Serializable {
 
     @EJB
+    private PedidoEquipamentoFacadeLocal pedidoEquipamentoFacade;
+
+    @EJB
+    private ReservaEquipamentoFacadeLocal reservaEquipamentoFacade;
+
+    @EJB
     private EquipamentoFacadeLocal ejbFacade;
 
-   
+    
+    
     private List<Equipamento> items = null;
     private Equipamento selected;
+    private PedidoEquipamento busca;
+    private List<PedidoEquipamento> validos = null;
 
     public EquipamentoController() {
+    }
+
+    public List<PedidoEquipamento> getValidos() {
+        validos = pedidoEquipamentoFacade.findValidosWithDataAtual(new Date());
+        return validos;
+    }
+
+    public void setValidos(List<PedidoEquipamento> validos) {
+        this.validos = validos;
+    }
+    public PedidoEquipamento getBusca() {
+        return busca;
+    }
+
+    public void setBusca(PedidoEquipamento busca) {
+        this.busca = busca;
     }
 
     public Equipamento getSelected() {
@@ -57,11 +87,35 @@ public class EquipamentoController implements Serializable {
         return selected;
     }
 
+    public Equipamento prepareBusca() {
+        selected = new Equipamento();
+        initializeEmbeddableKey();
+        return selected;
+    }
+
+    public List<Equipamento> getResultadoBusca() {
+
+        return getFacade().findPedido(busca.getTipo(), busca.getData(),
+                busca.getHoraInicial(), busca.getHoraFinal());
+    }
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("EquipamentoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public void criarReserva() {
+        ReservaEquipamento r = new ReservaEquipamento();
+        r.setPedido(busca);
+        r.setEquipamento(selected);
+        reservaEquipamentoFacade.create(r);
+        busca = null;
+        selected = null;
+        validos.clear();
+        JsfUtil.addSuccessMessage("reserva criada com sucesso");
+        
     }
 
     public void update() {

@@ -3,10 +3,16 @@ package br.uff.ic.controller;
 import br.uff.ic.entities.ReservaSala;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
+import br.uff.ic.entities.RegistroEquipamento;
+import br.uff.ic.entities.RegistroSala;
+import br.uff.ic.entities.ReservaEquipamento;
 import br.uff.ic.entities.Sala;
+import br.uff.ic.model.RegistroSalaFacadeLocal;
 import br.uff.ic.model.ReservaSalaFacadeLocal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,11 +31,40 @@ import javax.faces.convert.FacesConverter;
 public class ReservaSalaController implements Serializable {
 
     @EJB
+    private RegistroSalaFacadeLocal registroSalaFacade;
+
+    @EJB
     private ReservaSalaFacadeLocal ejbFacade;
     
+    
+    
     private List<ReservaSala> items = null;
+    private List<ReservaSala> buscaPorCPF = null;
     private ReservaSala selected;
 
+    private String CPF;
+    
+    private RegistroSala registro;
+    
+
+    public RegistroSala getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(RegistroSala registro) {
+        this.registro = registro;
+    }
+
+    
+    
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+    
     public ReservaSalaController() {
     }
 
@@ -50,12 +85,34 @@ public class ReservaSalaController implements Serializable {
     private ReservaSalaFacadeLocal getFacade() {
         return ejbFacade;
     }
+    public void buscar() {
+        // verifica se cpf é valido
+        JsfUtil.addSuccessMessage("buscado com sucesso");
+
+    }
 
     public ReservaSala prepareCreate() {
         selected = new ReservaSala();
         selected.setSala(new Sala());
         initializeEmbeddableKey();
         return selected;
+    }
+    public RegistroSala prepareCreateRegistro() {
+        registro = new RegistroSala();
+        initializeEmbeddableKey();
+        return registro;
+    }
+    public void salvarRegistro() {
+        registro.setReserva(selected);
+        Date data = new Date();
+        registro.setData(data);
+        registro.setHora(data);
+        registroSalaFacade.create(registro);
+        CPF= null;
+        selected=null;
+        registro=null;
+        
+        JsfUtil.addSuccessMessage("registro salvo com sucesso");
     }
 
     public void create() {
@@ -84,6 +141,19 @@ public class ReservaSalaController implements Serializable {
         return items;
     }
 
+    public List<ReservaSala> getBuscaPorCPF() {
+        if(CPF !=null){
+        buscaPorCPF = getFacade().findValidasWithDataCPF(new Date(), CPF);
+        return buscaPorCPF;
+        }else { 
+            return new ArrayList<>();
+        }
+    }
+
+    public void setBuscaPorCPF(List<ReservaSala> buscaPorCPF) {
+        this.buscaPorCPF = buscaPorCPF;
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

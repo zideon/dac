@@ -3,9 +3,13 @@ package br.uff.ic.controller;
 import br.uff.ic.entities.ReservaEquipamento;
 import br.uff.ic.controller.util.JsfUtil;
 import br.uff.ic.controller.util.JsfUtil.PersistAction;
+import br.uff.ic.entities.RegistroEquipamento;
+import br.uff.ic.model.RegistroEquipamentoFacadeLocal;
 import br.uff.ic.model.ReservaEquipamentoFacadeLocal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,10 +28,40 @@ import javax.faces.convert.FacesConverter;
 public class ReservaEquipamentoController implements Serializable {
 
     @EJB
+    private RegistroEquipamentoFacadeLocal registroEquipamentoFacade;
+
+    @EJB
     private ReservaEquipamentoFacadeLocal ejbFacade;
     
+    
+
     private List<ReservaEquipamento> items = null;
+
+    private List<ReservaEquipamento> buscaPorCPF = null;
     private ReservaEquipamento selected;
+
+    private String CPF;
+    
+    private RegistroEquipamento registro;
+    
+
+    public RegistroEquipamento getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(RegistroEquipamento registro) {
+        this.registro = registro;
+    }
+
+    
+    
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
 
     public ReservaEquipamentoController() {
     }
@@ -55,6 +89,29 @@ public class ReservaEquipamentoController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+    public RegistroEquipamento prepareCreateRegistro() {
+        registro = new RegistroEquipamento();
+        initializeEmbeddableKey();
+        return registro;
+    }
+    public void salvarRegistro() {
+        registro.setReserva(selected);
+        Date data = new Date();
+        registro.setData(data);
+        registro.setHora(data);
+        registroEquipamentoFacade.create(registro);
+        CPF= null;
+        selected=null;
+        registro=null;
+        
+        JsfUtil.addSuccessMessage("registro salvo com sucesso");
+    }
+
+    public void buscar() {
+        // verifica se cpf é valido
+        JsfUtil.addSuccessMessage("buscado com sucesso");
+
+    }
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ReservaEquipamentoCreated"));
@@ -80,6 +137,19 @@ public class ReservaEquipamentoController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public List<ReservaEquipamento> getBuscaPorCPF() {
+        if(CPF !=null){
+        buscaPorCPF = getFacade().findValidasWithDataCPF(new Date(), CPF);
+        return buscaPorCPF;
+        }else { 
+            return new ArrayList<>();
+        }
+    }
+
+    public void setBuscaPorCPF(List<ReservaEquipamento> buscaPorCPF) {
+        this.buscaPorCPF = buscaPorCPF;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

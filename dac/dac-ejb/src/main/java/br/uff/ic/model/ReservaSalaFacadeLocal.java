@@ -6,6 +6,7 @@
 package br.uff.ic.model;
 
 import br.uff.ic.entities.ReservaSala;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface ReservaSalaFacadeLocal {
     List<ReservaSala> findRange(int[] range);
 
     int count();
+    
+     List<ReservaSala> findValidasWithDataCPF(Date data,String CPF);
     
 }

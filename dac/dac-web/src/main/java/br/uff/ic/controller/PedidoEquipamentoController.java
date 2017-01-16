@@ -8,6 +8,8 @@ import br.uff.ic.model.PedidoEquipamentoFacadeLocal;
 import br.uff.ic.util.SessionUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,11 +32,17 @@ public class PedidoEquipamentoController implements Serializable {
 
    
     private List<PedidoEquipamento> items = null;
+    
+    private List<PedidoEquipamento> itemsPorDocente = null;
     private PedidoEquipamento selected;
 
     public PedidoEquipamentoController() {
     }
 
+    
+
+    
+    
     public PedidoEquipamento getSelected() {
         return selected;
     }
@@ -86,6 +94,19 @@ public class PedidoEquipamentoController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public List<PedidoEquipamento> getItemsPorDocente() {
+        Usuario user  = (Usuario) SessionUtil.getParam("usuario");
+        itemsPorDocente = getFacade().findByUsuario(user);
+        if(itemsPorDocente==null){
+            itemsPorDocente = new ArrayList<>();
+        }
+        return itemsPorDocente;
+    }
+
+    public void setItemsPorDocente(List<PedidoEquipamento> itemsPorDocente) {
+        this.itemsPorDocente = itemsPorDocente;
     }
    
     

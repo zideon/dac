@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/professor/template.xhtml">
+    <ui:composition template="/gerente/template.xhtml">
 
 
         <ui:define name="title">
@@ -14,18 +14,18 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="PedidoEquipamentoListForm">
+            <h:form id="SelecionaEquipamentoListForm">
                 <p:panel header="#{bundle.ListPedidoEquipamentoTitle}">
-                    <p:dataTable id="datalist" value="#{pedidoEquipamentoController.itemsPorDocente}" var="item"
-                                 selectionMode="single" selection="#{pedidoEquipamentoController.selected}"
+                    <p:dataTable id="datalist" value="#{equipamentoController.validos}" var="item"
+                                 selectionMode="single" selection="#{equipamentoController.busca}"
                                  paginator="true"
                                  rowKey="#{item.ID}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="SelecionaButton"/>
+                        <p:ajax event="rowUnselect" update="SelecionaButton"/>
 
                         <p:column>
                             <f:facet name="header">
@@ -58,18 +58,15 @@
                             <h:outputText value="#{item.usuario}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{pedidoEquipamentoController.prepareCreate}" update=":PedidoEquipamentoCreateForm" oncomplete="PF('PedidoEquipamentoCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PedidoEquipamentoViewForm" oncomplete="PF('PedidoEquipamentoViewDialog').show()" disabled="#{empty pedidoEquipamentoController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PedidoEquipamentoEditForm" oncomplete="PF('PedidoEquipamentoEditDialog').show()" disabled="#{empty pedidoEquipamentoController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{pedidoEquipamentoController.destroy}" update=":growl,datalist" disabled="#{empty pedidoEquipamentoController.selected}"/>
+                                <p:commandButton id="SelecionaButton" icon="ui-icon-plus"   value="Selecionar Equipamento" actionListener="#{equipamentoController.prepareBusca()}" update=":SelecionaEquipamentoCreateForm" 
+                                             disabled="#{empty equipamentoController.busca}" oncomplete="PF('SelecionaEquipamentoCreateDialog').show()"/>
+                   
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
+            <ui:include src="SelecionaEquipamento.xhtml"/>
         </ui:define>
     </ui:composition>
 
